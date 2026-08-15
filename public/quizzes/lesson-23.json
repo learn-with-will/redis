@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-23",
+  "lessonId": "lesson-23",
+  "title": "The Redis 8 Data and Query Engine",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "What did Redis 8 do with the capabilities formerly shipped as 'Redis Stack'?",
+      "options": [
+        { "id": "a", "text": "Removed them entirely" },
+        { "id": "b", "text": "Folded them (JSON, the Query Engine, probabilistic structures, time series) into Redis Open Source, and added Vector Sets" },
+        { "id": "c", "text": "Made them paid-only" },
+        { "id": "d", "text": "Renamed the core String type" }
+      ],
+      "answer": "b",
+      "explanation": "Redis 8 integrated the former module features into Redis Open Source and introduced the new Vector Sets type, so these capabilities are available out of the box."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "What does the Query Engine let you do that core Redis alone cannot?",
+      "options": [
+        { "id": "a", "text": "Store larger strings" },
+        { "id": "b", "text": "Query data by its content — secondary indexes, full-text, and vector search — not just by key" },
+        { "id": "c", "text": "Run without any memory" },
+        { "id": "d", "text": "Disable persistence" }
+      ],
+      "answer": "b",
+      "explanation": "Core Redis looks up values by key. The Query Engine creates secondary indexes over hashes/JSON so you can filter, full-text search, aggregate, and do vector search by content."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Native JSON lets you update individual fields by JSONPath" },
+        { "id": "b", "text": "A Bloom filter has no false negatives but possible false positives" },
+        { "id": "c", "text": "Vector Sets support similarity search for embeddings (AI/semantic search)" },
+        { "id": "d", "text": "Probabilistic structures return exact answers" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "JSON supports path-based updates, Bloom filters are approximate (no false negatives, possible false positives), and Vector Sets do similarity search. Probabilistic types are approximate by design, not exact."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "What are Vector Sets / vector search primarily used for?",
+      "options": [
+        { "id": "a", "text": "Compressing strings" },
+        { "id": "b", "text": "Finding items whose embedding vectors are most similar to a query — semantic search, recommendations, and RAG" },
+        { "id": "c", "text": "Replicating data across nodes" },
+        { "id": "d", "text": "Setting key expirations" }
+      ],
+      "answer": "b",
+      "explanation": "Vector similarity finds items by meaning (via embedding vectors), which powers semantic search, recommendations, and retrieval-augmented generation for AI applications."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The probabilistic structure that answers approximate set membership with no false negatives but possible false positives is a ______ filter. (one word)",
+      "answer": ["Bloom", "bloom"],
+      "explanation": "A Bloom filter can say 'definitely not present' or 'probably present' — never a false negative, but sometimes a false positive — using very little memory."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "Why prefer native JSON over storing a JSON string and using GET/SET?",
+      "options": [
+        { "id": "a", "text": "JSON values never expire" },
+        { "id": "b", "text": "You can read and update individual fields by path without deserializing and rewriting the whole document" },
+        { "id": "c", "text": "Strings cannot hold JSON" },
+        { "id": "d", "text": "It disables the Query Engine" }
+      ],
+      "answer": "b",
+      "explanation": "Native JSON with JSONPath lets you address and modify a single field server-side, avoiding the read-modify-write of a whole serialized blob."
+    }
+  ]
+}

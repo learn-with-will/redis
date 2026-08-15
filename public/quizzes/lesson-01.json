@@ -1,0 +1,79 @@
+{
+  "id": "quiz-lesson-01",
+  "lessonId": "lesson-01",
+  "title": "What Is Redis?",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "Which phrase best describes what Redis is?",
+      "options": [
+        { "id": "a", "text": "A relational database that stores tables on disk" },
+        { "id": "b", "text": "An in-memory key-value store that serves rich data structures over the network" },
+        { "id": "c", "text": "A programming language for data processing" },
+        { "id": "d", "text": "A file system optimized for large binary files" }
+      ],
+      "answer": "b",
+      "explanation": "Redis (REmote DIctionary Server) keeps data in memory and maps keys to rich data structures (strings, lists, hashes, sets, sorted sets, and more), accessed over the network."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "Why is each individual Redis command atomic?",
+      "options": [
+        { "id": "a", "text": "Because Redis locks every key before writing to it" },
+        { "id": "b", "text": "Because commands are executed one at a time in a single thread, so none can interleave" },
+        { "id": "c", "text": "Because Redis runs every command inside a database transaction with rollback" },
+        { "id": "d", "text": "Because clients coordinate with each other before sending commands" }
+      ],
+      "answer": "b",
+      "explanation": "Redis executes command logic in a single thread, running each command to completion before the next — so a single command can never be observed half-done."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about Redis are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Redis can persist data to disk with RDB snapshots and/or the AOF" },
+        { "id": "b", "text": "Redis can be used as a cache, a database, and a message broker" },
+        { "id": "c", "text": "Redis is entirely single-threaded and never uses any other threads" },
+        { "id": "d", "text": "A single slow command can block other clients" }
+      ],
+      "answer": ["a", "b", "d"],
+      "explanation": "Redis persists via RDB/AOF, plays all three roles, and blocks on slow commands (so avoid them). It is NOT entirely single-threaded — only command execution is; it uses extra threads for I/O and background work."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "Since Redis 8.0 (May 2025), which licensing statement is correct?",
+      "options": [
+        { "id": "a", "text": "Redis is closed source with no source available" },
+        { "id": "b", "text": "Redis is available under a choice of AGPLv3 (open source), RSALv2, or SSPLv1" },
+        { "id": "c", "text": "Redis is only under the SSPL and is not open source" },
+        { "id": "d", "text": "Redis returned to the BSD-3-Clause license" }
+      ],
+      "answer": "b",
+      "explanation": "Redis 8.0 added AGPLv3 (an OSI-approved open-source license) alongside the source-available RSALv2 and SSPLv1, making Redis tri-licensed. It did not return to BSD; Valkey is the BSD-licensed fork."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The BSD-licensed fork of Redis 7.2.4, created under the Linux Foundation in 2024, is called ______. (one word)",
+      "answer": ["Valkey", "valkey"],
+      "explanation": "Valkey was forked from Redis 7.2.4 after the March 2024 relicense and is governed by the Linux Foundation under the permissive BSD license."
+    },
+    {
+      "id": "q6",
+      "type": "match-pair",
+      "prompt": "Match each store to the best short description.",
+      "pairs": [
+        { "left": "Redis", "right": "In-memory data-structure store (cache, DB, and broker)" },
+        { "left": "Memcached", "right": "Simple multi-threaded string cache" },
+        { "left": "Relational database", "right": "On-disk, queryable, ACID with rollback" },
+        { "left": "Valkey", "right": "BSD-licensed community fork of Redis" }
+      ],
+      "explanation": "Redis is a rich in-memory store; Memcached is a plain string cache; a relational database is durable and queryable; Valkey is the open-source fork of Redis."
+    }
+  ]
+}

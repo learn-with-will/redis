@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-15",
+  "lessonId": "lesson-15",
+  "title": "Memory and Eviction",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "What is the default maxmemory-policy, and what does it do when memory is full?",
+      "options": [
+        { "id": "a", "text": "allkeys-lru — it evicts the least-recently-used key" },
+        { "id": "b", "text": "noeviction — it rejects new writes with an OOM error (reads still work)" },
+        { "id": "c", "text": "volatile-ttl — it evicts the soonest-to-expire key" },
+        { "id": "d", "text": "allkeys-random — it evicts a random key" }
+      ],
+      "answer": "b",
+      "explanation": "The default is noeviction: Redis would rather reject writes than delete data. That's safe for a datastore but usually wrong for a cache."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "How do allkeys-* policies differ from volatile-* policies?",
+      "options": [
+        { "id": "a", "text": "allkeys-* only evict keys with a TTL; volatile-* evict any key" },
+        { "id": "b", "text": "allkeys-* can evict any key; volatile-* only evict keys that have a TTL" },
+        { "id": "c", "text": "They are identical" },
+        { "id": "d", "text": "volatile-* never evict anything" }
+      ],
+      "answer": "b",
+      "explanation": "allkeys-* consider the whole keyspace; volatile-* consider only keys with a TTL set (and fall back to noeviction behavior if none are eligible)."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "maxmemory 0 means no limit" },
+        { "id": "b", "text": "LRU and LFU are approximated by sampling, not tracked exactly" },
+        { "id": "c", "text": "Eviction can remove keys that have no TTL (under an allkeys-* policy)" },
+        { "id": "d", "text": "Eviction and expiration are the same mechanism" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "maxmemory 0 is unlimited, LRU/LFU are sampled approximations, and allkeys-* eviction can remove TTL-less keys. Eviction (memory pressure) is DISTINCT from expiration (per-key TTL)."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "You set maxmemory-policy volatile-lru but never set TTLs on your keys. What happens when memory fills up?",
+      "options": [
+        { "id": "a", "text": "Redis evicts random keys anyway" },
+        { "id": "b", "text": "Redis has no eligible keys to evict, so it behaves like noeviction and rejects writes" },
+        { "id": "c", "text": "Redis automatically adds TTLs to all keys" },
+        { "id": "d", "text": "Redis doubles its memory limit" }
+      ],
+      "answer": "b",
+      "explanation": "volatile-* policies only evict keys that have a TTL. With no TTL'd keys, there's nothing to evict, so writes start failing with OOM — like noeviction."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The configuration directive that sets the maximum memory Redis uses for data is ______. (one word)",
+      "answer": ["maxmemory"],
+      "explanation": "maxmemory sets the ceiling (e.g. maxmemory 512mb); 0 means unlimited."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "Why are Redis's LRU and LFU described as approximate?",
+      "options": [
+        { "id": "a", "text": "They guess randomly" },
+        { "id": "b", "text": "Redis samples a few keys and evicts the best candidate rather than tracking exact usage order for every key" },
+        { "id": "c", "text": "They only work in Redis Cluster" },
+        { "id": "d", "text": "They ignore access patterns entirely" }
+      ],
+      "answer": "b",
+      "explanation": "Tracking perfect LRU/LFU for every key would cost too much, so Redis samples a small set (maxmemory-samples) and evicts the best candidate — a close approximation you can tune."
+    }
+  ]
+}

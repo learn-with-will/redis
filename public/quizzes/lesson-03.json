@@ -1,0 +1,79 @@
+{
+  "id": "quiz-lesson-03",
+  "lessonId": "lesson-03",
+  "title": "Keys and Strings",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "Why should you avoid KEYS on a large production database?",
+      "options": [
+        { "id": "a", "text": "It permanently deletes matching keys" },
+        { "id": "b", "text": "It is O(N) over the whole keyspace and can block the server for everyone" },
+        { "id": "c", "text": "It only works on string values" },
+        { "id": "d", "text": "It requires authentication that SCAN does not" }
+      ],
+      "answer": "b",
+      "explanation": "KEYS scans every key in one command, and since commands run in a single thread, that can block all other clients on a big keyspace. Use SCAN instead."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "How do you know a SCAN iteration is complete?",
+      "options": [
+        { "id": "a", "text": "When it returns an empty array of keys" },
+        { "id": "b", "text": "When the returned cursor is 0" },
+        { "id": "c", "text": "When it returns the same keys twice" },
+        { "id": "d", "text": "SCAN always finishes in a single call" }
+      ],
+      "answer": "b",
+      "explanation": "SCAN is cursor-based: you pass the returned cursor back on each call, and iteration is finished when the cursor comes back as 0 (an individual call may return zero keys but a non-zero cursor)."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about Redis Strings are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "They are binary-safe and can hold up to 512 MB" },
+        { "id": "b", "text": "INCR works only if the current value parses as an integer" },
+        { "id": "c", "text": "A plain SET keeps any existing TTL by default" },
+        { "id": "d", "text": "MSET and MGET operate on several keys in one command" }
+      ],
+      "answer": ["a", "b", "d"],
+      "explanation": "Strings are binary-safe up to 512 MB; INCR errors on non-integers; MSET/MGET are multi-key. A plain SET CLEARS the TTL unless you pass KEEPTTL."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "What does `SET lock:job1 \"owner\" NX` return if lock:job1 already exists?",
+      "options": [
+        { "id": "a", "text": "OK — it overwrites the value" },
+        { "id": "b", "text": "(nil) — NX refuses to set because the key exists" },
+        { "id": "c", "text": "(error) — NX is not a valid option" },
+        { "id": "d", "text": "(integer) 0" }
+      ],
+      "answer": "b",
+      "explanation": "NX means 'only set if the key does not exist.' When the key already exists, SET does nothing and returns (nil)."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The command that atomically increases the integer stored at a key by 1 is ______. (one word)",
+      "answer": ["INCR", "incr"],
+      "explanation": "INCR adds 1 atomically (creating the key as 0 first if needed). Because it's a single command, concurrent increments never lose counts."
+    },
+    {
+      "id": "q6",
+      "type": "match-pair",
+      "prompt": "Match each command to what it does.",
+      "pairs": [
+        { "left": "EXISTS", "right": "Reports whether a key is present" },
+        { "left": "TYPE", "right": "Returns the value's data type" },
+        { "left": "APPEND", "right": "Adds to a string and returns the new length" },
+        { "left": "INCRBYFLOAT", "right": "Adds a floating-point amount to a number" }
+      ],
+      "explanation": "EXISTS checks presence, TYPE reports the type, APPEND extends a string (returning its new length), and INCRBYFLOAT does floating-point addition."
+    }
+  ]
+}

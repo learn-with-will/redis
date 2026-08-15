@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-06",
+  "lessonId": "lesson-06",
+  "title": "Sets",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "Which two properties define a Redis Set?",
+      "options": [
+        { "id": "a", "text": "Ordered by insertion, allows duplicates" },
+        { "id": "b", "text": "Unordered, members are unique (no duplicates)" },
+        { "id": "c", "text": "Ordered by score, members are unique" },
+        { "id": "d", "text": "Ordered alphabetically, allows duplicates" }
+      ],
+      "answer": "b",
+      "explanation": "A Set is an unordered collection of unique members; adding a duplicate has no effect. (Ordering by score describes a Sorted Set.)"
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "Which command returns the members present in ALL of the given sets?",
+      "options": [
+        { "id": "a", "text": "SUNION" },
+        { "id": "b", "text": "SDIFF" },
+        { "id": "c", "text": "SINTER" },
+        { "id": "d", "text": "SMEMBERS" }
+      ],
+      "answer": "c",
+      "explanation": "SINTER computes the intersection (members in every set). SUNION is the union, SDIFF is the difference."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about Set commands are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "SADD returns the number of newly added members" },
+        { "id": "b", "text": "SINTERCARD returns the size of an intersection without materializing it" },
+        { "id": "c", "text": "SISMEMBER tests whether a member is in the set" },
+        { "id": "d", "text": "SMEMBERS is a paginated, cheap way to read huge sets" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "SADD counts new members, SINTERCARD gives just the intersection size, and SISMEMBER tests membership. SMEMBERS is O(N) and unpaginated — use SSCAN for large sets."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "You want to store the result of a set intersection to reuse it later. Which command helps?",
+      "options": [
+        { "id": "a", "text": "SINTERSTORE" },
+        { "id": "b", "text": "SINTER (it stores automatically)" },
+        { "id": "c", "text": "SCARD" },
+        { "id": "d", "text": "SPOP" }
+      ],
+      "answer": "a",
+      "explanation": "SINTERSTORE writes the intersection into a destination key so you can reuse it, rather than recomputing with SINTER each time."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The command that returns the number of members in a set (its cardinality) is ______. (one word)",
+      "answer": ["SCARD", "scard"],
+      "explanation": "SCARD returns the member count of a set in O(1)."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "Which is the best use case for a Set rather than a List?",
+      "options": [
+        { "id": "a", "text": "A FIFO job queue where order matters" },
+        { "id": "b", "text": "The distinct tags on an article, where uniqueness matters and order does not" },
+        { "id": "c", "text": "A ranked leaderboard" },
+        { "id": "d", "text": "The last 100 log lines in order" }
+      ],
+      "answer": "b",
+      "explanation": "Sets shine when you need uniqueness and membership tests without ordering — like tags. Queues want a List; rankings want a Sorted Set."
+    }
+  ]
+}

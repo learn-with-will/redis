@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-13",
+  "lessonId": "lesson-13",
+  "title": "Lua Scripting and Functions",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "In `EVAL script numkeys ...`, what does numkeys tell Redis?",
+      "options": [
+        { "id": "a", "text": "How many times to run the script" },
+        { "id": "b", "text": "How many of the following arguments are keys (populating KEYS), with the rest going to ARGV" },
+        { "id": "c", "text": "The maximum runtime in milliseconds" },
+        { "id": "d", "text": "The number of return values" }
+      ],
+      "answer": "b",
+      "explanation": "numkeys splits the arguments: the first numkeys of them are key names (KEYS[1..]), and the remainder are ARGV. Passing keys explicitly is also what lets Cluster route correctly."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "Why must Lua scripts be kept short and fast?",
+      "options": [
+        { "id": "a", "text": "Because Lua is a slow language" },
+        { "id": "b", "text": "Because a script runs atomically on the single command thread, blocking all other clients while it runs" },
+        { "id": "c", "text": "Because scripts can only use 1 KB of memory" },
+        { "id": "d", "text": "Because EVAL charges per second" }
+      ],
+      "answer": "b",
+      "explanation": "A script's atomicity comes from monopolizing the one command thread, so a long-running script freezes every other client until it finishes."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "A Lua script executes atomically — no other command interleaves" },
+        { "id": "b", "text": "EVALSHA runs a script cached by its SHA-1 hash" },
+        { "id": "c", "text": "Redis Functions are persisted with the dataset and replicated" },
+        { "id": "d", "text": "EVAL scripts are permanently stored in RDB/AOF like data" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "Scripts are atomic, EVALSHA uses the cached SHA-1, and Functions are persisted/replicated. EVAL scripts are only an ephemeral cache — they are NOT stored with the dataset."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "What is a key advantage of Redis Functions over EVAL scripts?",
+      "options": [
+        { "id": "a", "text": "They run faster because they skip atomicity" },
+        { "id": "b", "text": "They are named, loaded as a library, and persisted/replicated with the data" },
+        { "id": "c", "text": "They can block the server without consequences" },
+        { "id": "d", "text": "They do not need keys or arguments" }
+      ],
+      "answer": "b",
+      "explanation": "Functions (Redis 7.0+) are first-class: named, managed as a library, and stored with the dataset (RDB/AOF) and replicated — unlike the ephemeral script cache behind EVAL."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "Inside a Lua script, you invoke a Redis command with redis.____('SET', KEYS[1], ARGV[1]). (the function name that raises on error)",
+      "answer": ["call", "CALL"],
+      "explanation": "redis.call runs a command and raises an error (aborting the script) if it fails; redis.pcall instead returns the error as a value."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "Why should a script receive the keys it touches through KEYS rather than hard-coding them?",
+      "options": [
+        { "id": "a", "text": "It makes the script run twice as fast" },
+        { "id": "b", "text": "So Redis knows which keys are accessed, which is required for correct routing in Redis Cluster" },
+        { "id": "c", "text": "Hard-coded keys are not allowed in Lua" },
+        { "id": "d", "text": "It reduces the SHA-1 length" }
+      ],
+      "answer": "b",
+      "explanation": "Declaring keys via KEYS lets Redis (and Cluster) know which keys the script operates on, which is necessary to route the command to the right shard."
+    }
+  ]
+}

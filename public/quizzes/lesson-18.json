@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-18",
+  "lessonId": "lesson-18",
+  "title": "Replication",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "By default, when does a primary acknowledge a write to the client?",
+      "options": [
+        { "id": "a", "text": "Only after all replicas confirm they received it" },
+        { "id": "b", "text": "As soon as it applies the write locally, without waiting for replicas (asynchronous)" },
+        { "id": "c", "text": "After the write is flushed to disk on every replica" },
+        { "id": "d", "text": "Only after a majority of replicas vote" }
+      ],
+      "answer": "b",
+      "explanation": "Replication is asynchronous: the primary acks locally and streams to replicas in the background, which is why a failover can lose recently acked writes."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "Why can a failover lose recently acknowledged writes?",
+      "options": [
+        { "id": "a", "text": "Replicas delete data on promotion" },
+        { "id": "b", "text": "Writes acked by the primary may not have reached a replica before the primary crashed" },
+        { "id": "c", "text": "Redis never replicates writes" },
+        { "id": "d", "text": "The client cancels the writes" }
+      ],
+      "answer": "b",
+      "explanation": "With async replication, an ack doesn't mean a replica has the write. If the primary dies before replicating and a behind replica is promoted, those writes are gone."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about Redis replication are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Replicas are read-only by default" },
+        { "id": "b", "text": "A partial resync sends only the writes missed since the replica's offset" },
+        { "id": "c", "text": "Reads from a replica can be stale due to lag" },
+        { "id": "d", "text": "Replication makes Redis strongly consistent" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "Replicas are read-only, partial resync uses the backlog + offset, and replica reads can lag. Replication is NOT strongly consistent."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "What does WAIT numreplicas timeout do?",
+      "options": [
+        { "id": "a", "text": "Blocks until at least that many replicas acknowledge your writes (or the timeout elapses)" },
+        { "id": "b", "text": "Guarantees the writes are on disk everywhere" },
+        { "id": "c", "text": "Makes all future replication synchronous permanently" },
+        { "id": "d", "text": "Deletes lagging replicas" }
+      ],
+      "answer": "a",
+      "explanation": "WAIT blocks until N replicas ack the writes so far, shrinking the loss window — but it does not guarantee disk durability or full consistency."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The command that makes an instance replicate a given primary is ______ host port. (one word)",
+      "answer": ["REPLICAOF", "replicaof"],
+      "explanation": "REPLICAOF host port turns an instance into a replica of that primary; REPLICAOF NO ONE promotes it back to a primary."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "When is it risky to read your own just-written value from a replica?",
+      "options": [
+        { "id": "a", "text": "Never — replicas are always perfectly in sync" },
+        { "id": "b", "text": "When you need read-after-write, because replica lag means the write may not have arrived yet" },
+        { "id": "c", "text": "Only when the replica is also a primary" },
+        { "id": "d", "text": "Only in Redis Cluster" }
+      ],
+      "answer": "b",
+      "explanation": "Because replication is asynchronous, a replica may not yet have your latest write. If you must see your own write immediately, read from the primary."
+    }
+  ]
+}

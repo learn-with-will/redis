@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-19",
+  "lessonId": "lesson-19",
+  "title": "High Availability with Sentinel",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "What is the primary purpose of Redis Sentinel?",
+      "options": [
+        { "id": "a", "text": "To shard data across many primaries" },
+        { "id": "b", "text": "To provide high availability for a primary/replica setup via monitoring and automatic failover" },
+        { "id": "c", "text": "To compress data in memory" },
+        { "id": "d", "text": "To encrypt client connections" }
+      ],
+      "answer": "b",
+      "explanation": "Sentinel monitors a primary/replica deployment and, on failure, promotes a replica and redirects clients — high availability, not sharding."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "What does the quorum configure?",
+      "options": [
+        { "id": "a", "text": "How many keys can be stored" },
+        { "id": "b", "text": "How many Sentinels must agree the primary is down (ODOWN) before failover" },
+        { "id": "c", "text": "The number of replicas allowed" },
+        { "id": "d", "text": "The TCP port Sentinel uses" }
+      ],
+      "answer": "b",
+      "explanation": "The quorum is the number of Sentinels that must agree the primary is objectively down (ODOWN) to trigger a failover."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about Sentinel are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "You should run an odd number of Sentinels, at least three, on separate hosts" },
+        { "id": "b", "text": "Clients can ask Sentinel for the current primary's address (service discovery)" },
+        { "id": "c", "text": "SDOWN is one Sentinel's view; ODOWN requires the quorum to agree" },
+        { "id": "d", "text": "Sentinel shards the keyspace across nodes" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "Odd number ≥3, service discovery, and the SDOWN→ODOWN progression are all correct. Sentinel does NOT shard data — that's Cluster."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "How does Sentinel differ from Redis Cluster?",
+      "options": [
+        { "id": "a", "text": "They are identical" },
+        { "id": "b", "text": "Sentinel provides HA for a single non-sharded primary; Cluster shards data across many primaries and also handles failover" },
+        { "id": "c", "text": "Cluster cannot fail over; Sentinel can" },
+        { "id": "d", "text": "Sentinel stores more data per node" }
+      ],
+      "answer": "b",
+      "explanation": "Sentinel keeps one primary available (no sharding); Cluster splits data across 16384 slots on multiple primaries with built-in failover."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "When enough Sentinels agree the primary is down, it is declared ______ Down (objectively). (one word for the O)",
+      "answer": ["Objectively", "objectively", "ODOWN", "odown"],
+      "explanation": "ODOWN (Objectively Down) is reached when the quorum of Sentinels agrees the primary is unreachable — the trigger for failover."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "Why is running only two Sentinels risky?",
+      "options": [
+        { "id": "a", "text": "Two Sentinels use too much memory" },
+        { "id": "b", "text": "Authorizing a failover needs a majority of Sentinels, and a single failure or partition can break a two-node majority" },
+        { "id": "c", "text": "Sentinel requires exactly one instance" },
+        { "id": "d", "text": "Two Sentinels cannot monitor replicas" }
+      ],
+      "answer": "b",
+      "explanation": "A failover requires a majority of Sentinels to agree. With only two, losing one (or a partition) prevents forming a majority, stalling recovery — so run an odd number, at least three."
+    }
+  ]
+}

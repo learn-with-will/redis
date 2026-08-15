@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-21",
+  "lessonId": "lesson-21",
+  "title": "Security",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "What is the most important rule of Redis security?",
+      "options": [
+        { "id": "a", "text": "Always enable RDB persistence" },
+        { "id": "b", "text": "Never expose Redis directly to the internet; run it on a trusted private network" },
+        { "id": "c", "text": "Use only database 0" },
+        { "id": "d", "text": "Disable replication" }
+      ],
+      "answer": "b",
+      "explanation": "Redis is designed for a trusted network. An internet-reachable Redis is a classic, heavily-exploited misconfiguration — keep it private and firewalled."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "What does protected mode do?",
+      "options": [
+        { "id": "a", "text": "Encrypts all traffic automatically" },
+        { "id": "b", "text": "Refuses external connections when Redis has no password/ACL configured and is listening on non-loopback interfaces" },
+        { "id": "c", "text": "Makes all keys read-only" },
+        { "id": "d", "text": "Requires TLS for every client" }
+      ],
+      "answer": "b",
+      "explanation": "Protected mode is a safety net: with no auth configured and external interfaces bound, it blocks connections from other hosts. It is not a replacement for real authentication."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about Redis authentication and hardening are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "ACLs let you create users with fine-grained command, key, and channel permissions" },
+        { "id": "b", "text": "requirepass sets a password for the default user" },
+        { "id": "c", "text": "You can disable a command by renaming it to an empty string with rename-command" },
+        { "id": "d", "text": "Redis traffic is encrypted by default" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "ACLs, requirepass, and rename-command are all real controls. Redis traffic is NOT encrypted by default — you must enable TLS."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "Why give a read-only reporting service its own ACL user scoped to specific keys?",
+      "options": [
+        { "id": "a", "text": "It makes queries run faster" },
+        { "id": "b", "text": "Least privilege — a compromise of that service can't write, delete, or read keys outside its scope" },
+        { "id": "c", "text": "ACL users bypass authentication" },
+        { "id": "d", "text": "It enables multiple databases" }
+      ],
+      "answer": "b",
+      "explanation": "Scoping a user to exactly what it needs limits the blast radius if the service is compromised — the essence of least privilege."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The configuration directive that sets a single password for the default user is ______. (one word)",
+      "answer": ["requirepass"],
+      "explanation": "requirepass sets the default user's password; clients then authenticate with AUTH before running commands."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "What does enabling TLS in Redis protect against?",
+      "options": [
+        { "id": "a", "text": "Running out of memory" },
+        { "id": "b", "text": "Eavesdropping on client/server (and cluster) traffic sent over the network" },
+        { "id": "c", "text": "Slow commands blocking the server" },
+        { "id": "d", "text": "Key expiration" }
+      ],
+      "answer": "b",
+      "explanation": "TLS encrypts Redis connections so credentials and data can't be read in transit over an untrusted network."
+    }
+  ]
+}

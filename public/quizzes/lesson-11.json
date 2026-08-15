@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-11",
+  "lessonId": "lesson-11",
+  "title": "Streams",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "How does a Stream differ from Pub/Sub?",
+      "options": [
+        { "id": "a", "text": "A Stream persists its entries so they can be replayed by ID; Pub/Sub stores nothing" },
+        { "id": "b", "text": "A Stream delivers to every subscriber; Pub/Sub delivers to one" },
+        { "id": "c", "text": "A Stream cannot have more than one consumer" },
+        { "id": "d", "text": "There is no real difference" }
+      ],
+      "answer": "a",
+      "explanation": "Streams are an append-only, persistent log — entries stay and can be re-read by ID. Pub/Sub is fire-and-forget with no history."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "What does passing `*` as the ID to XADD do?",
+      "options": [
+        { "id": "a", "text": "Deletes the oldest entry" },
+        { "id": "b", "text": "Tells Redis to auto-generate the next (increasing) entry ID" },
+        { "id": "c", "text": "Reads all entries" },
+        { "id": "d", "text": "Acknowledges the entry" }
+      ],
+      "answer": "b",
+      "explanation": "`*` asks Redis to generate the next ID (a millisecond timestamp plus a sequence number), keeping the stream strictly ordered."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements about consumer groups are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "Each entry is delivered to one consumer in the group, not all of them" },
+        { "id": "b", "text": "An unacknowledged entry stays in the Pending Entries List (PEL)" },
+        { "id": "c", "text": "XACK removes an entry from the PEL" },
+        { "id": "d", "text": "Entries are automatically deleted from the stream once acknowledged" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "Consumer groups split work, track unacked entries in the PEL, and clear them with XACK. XACK does NOT delete the entry from the stream itself — trimming (MAXLEN/XTRIM) does that."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "A consumer reads an entry with XREADGROUP but crashes before acknowledging it. What happens?",
+      "options": [
+        { "id": "a", "text": "The entry is lost permanently" },
+        { "id": "b", "text": "The entry stays in the PEL and can be reclaimed by another consumer via XCLAIM/XAUTOCLAIM" },
+        { "id": "c", "text": "The whole stream is rolled back" },
+        { "id": "d", "text": "The entry is delivered to every other consumer immediately" }
+      ],
+      "answer": "b",
+      "explanation": "Because delivery is at-least-once, the unacknowledged entry remains pending and another consumer can claim and finish it — nothing is silently lost."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The command a consumer runs to acknowledge that it finished processing a stream entry is ______. (one word)",
+      "answer": ["XACK", "xack"],
+      "explanation": "XACK marks an entry as processed and removes it from the group's Pending Entries List."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "How do you keep a busy stream from consuming memory without bound?",
+      "options": [
+        { "id": "a", "text": "It trims itself automatically" },
+        { "id": "b", "text": "Cap it with MAXLEN on XADD (e.g. MAXLEN ~ 10000) or trim with XTRIM" },
+        { "id": "c", "text": "Call XACK on every entry" },
+        { "id": "d", "text": "Streams never use memory" }
+      ],
+      "answer": "b",
+      "explanation": "Streams persist, so you must bound them explicitly with MAXLEN (the ~ makes trimming approximate and cheaper) or XTRIM. XACK only clears the PEL, not the log."
+    }
+  ]
+}

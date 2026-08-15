@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-05",
+  "lessonId": "lesson-05",
+  "title": "Hashes",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "What does a Redis Hash store under a single key?",
+      "options": [
+        { "id": "a", "text": "An ordered list of elements" },
+        { "id": "b", "text": "A set of field-value pairs (a small dictionary)" },
+        { "id": "c", "text": "A sorted collection ranked by score" },
+        { "id": "d", "text": "A single string value only" }
+      ],
+      "answer": "b",
+      "explanation": "A Hash maps field names to values under one key, which makes it a natural fit for modeling an object like a user or product."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "What does HSET return?",
+      "options": [
+        { "id": "a", "text": "OK" },
+        { "id": "b", "text": "The total number of fields in the hash" },
+        { "id": "c", "text": "The number of NEW fields added (existing ones are updated but not counted)" },
+        { "id": "d", "text": "The value that was overwritten" }
+      ],
+      "answer": "c",
+      "explanation": "HSET returns how many fields were newly created; updates to existing fields still happen but don't add to that count."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which are genuine advantages of one hash over many separate string keys for an object? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "You can delete the whole object with a single DEL" },
+        { "id": "b", "text": "Small hashes use less memory via a compact listpack encoding" },
+        { "id": "c", "text": "You can fetch the whole object with one HGETALL" },
+        { "id": "d", "text": "Every field automatically gets its own independent TTL by default" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "Hashes give one-key management, memory savings, and one-shot fetch. Per-field TTLs are NOT the default — they require Redis 7.4+; normally a TTL applies to the whole key."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "Why can HGETALL be risky on a very large hash?",
+      "options": [
+        { "id": "a", "text": "It deletes fields as it reads them" },
+        { "id": "b", "text": "It returns every field-value pair in one O(N) blocking command" },
+        { "id": "c", "text": "It only works on hashes with fewer than 10 fields" },
+        { "id": "d", "text": "It requires the hash to be sorted first" }
+      ],
+      "answer": "b",
+      "explanation": "HGETALL doesn't paginate — it returns all fields at once, which is O(N) and can block the server on a huge hash. Use HSCAN to iterate instead."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The command that atomically adds an integer to a numeric field of a hash is ______. (one word)",
+      "answer": ["HINCRBY", "hincrby"],
+      "explanation": "HINCRBY adds an integer to a hash field atomically (HINCRBYFLOAT does the same for floating-point amounts)."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "Which statement about HMSET is correct?",
+      "options": [
+        { "id": "a", "text": "It is the only way to set multiple fields" },
+        { "id": "b", "text": "It is deprecated; HSET now accepts multiple field-value pairs" },
+        { "id": "c", "text": "It sets a field only if it does not exist" },
+        { "id": "d", "text": "It sets a TTL on each field" }
+      ],
+      "answer": "b",
+      "explanation": "HMSET is deprecated. Modern HSET accepts multiple field-value pairs, so HSET covers both single and multi-field writes."
+    }
+  ]
+}

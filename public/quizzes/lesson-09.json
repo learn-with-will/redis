@@ -1,0 +1,80 @@
+{
+  "id": "quiz-lesson-09",
+  "lessonId": "lesson-09",
+  "title": "Bitmaps and HyperLogLog",
+  "passingScore": 60,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single-choice",
+      "prompt": "Which statement about Redis Bitmaps is correct?",
+      "options": [
+        { "id": "a", "text": "They are a distinct data type separate from strings" },
+        { "id": "b", "text": "They are bit-level operations performed on ordinary String values" },
+        { "id": "c", "text": "They can only store 64 bits" },
+        { "id": "d", "text": "They automatically compress sparse data" }
+      ],
+      "answer": "b",
+      "explanation": "Bitmap commands (SETBIT, GETBIT, BITCOUNT, BITOP) treat a String as an array of bits — there is no separate 'bitmap' type."
+    },
+    {
+      "id": "q2",
+      "type": "single-choice",
+      "prompt": "What does a HyperLogLog give you?",
+      "options": [
+        { "id": "a", "text": "An exact count and the ability to list all members" },
+        { "id": "b", "text": "An approximate count of distinct elements using fixed, tiny memory" },
+        { "id": "c", "text": "A sorted list of the most frequent elements" },
+        { "id": "d", "text": "A way to store and retrieve large blobs" }
+      ],
+      "answer": "b",
+      "explanation": "A HyperLogLog estimates cardinality (distinct count) in a fixed ~12 KB with about 0.81% error; it does not store or return the individual elements."
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which statements are true? Select all that apply.",
+      "options": [
+        { "id": "a", "text": "PFADD adds elements to a HyperLogLog; PFCOUNT returns the estimated distinct count" },
+        { "id": "b", "text": "A HyperLogLog uses roughly the same memory whether it holds thousands or billions of elements" },
+        { "id": "c", "text": "You can read individual elements back out of a HyperLogLog" },
+        { "id": "d", "text": "BITOP can combine two bitmaps with AND/OR/XOR/NOT" }
+      ],
+      "answer": ["a", "b", "d"],
+      "explanation": "PFADD/PFCOUNT work as described, HLL memory is near-constant, and BITOP combines bitmaps. You canNOT list a HyperLogLog's members."
+    },
+    {
+      "id": "q4",
+      "type": "single-choice",
+      "prompt": "For which task is a HyperLogLog the WRONG choice?",
+      "options": [
+        { "id": "a", "text": "Reporting roughly how many unique visitors a huge site had today" },
+        { "id": "b", "text": "Billing each customer for the exact number of distinct API callers, auditable" },
+        { "id": "c", "text": "Estimating distinct search terms across billions of queries" },
+        { "id": "d", "text": "Rolling daily unique estimates up into a monthly total with PFMERGE" }
+      ],
+      "answer": "b",
+      "explanation": "HyperLogLog is approximate (~0.81% error) and can't list members, so it's unsuitable for exact, auditable counts like billing — use a Set or a database."
+    },
+    {
+      "id": "q5",
+      "type": "fill-blank",
+      "prompt": "The command that counts the number of set (1) bits in a bitmap is ______. (one word)",
+      "answer": ["BITCOUNT", "bitcount"],
+      "explanation": "BITCOUNT counts the 1-bits, optionally within a byte (or BIT) range."
+    },
+    {
+      "id": "q6",
+      "type": "single-choice",
+      "prompt": "When is a bitmap a poor fit for tracking boolean state per item?",
+      "options": [
+        { "id": "a", "text": "When item IDs are dense small integers" },
+        { "id": "b", "text": "When item IDs are large and sparse (e.g. random 64-bit numbers)" },
+        { "id": "c", "text": "When you need to count set bits" },
+        { "id": "d", "text": "When you want to combine two days with BITOP" }
+      ],
+      "answer": "b",
+      "explanation": "A bitmap's size is driven by the highest offset you set, so large, sparse IDs waste huge amounts of space. Bitmaps shine with dense integer IDs."
+    }
+  ]
+}
