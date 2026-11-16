@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/learn-with-will/course-shell/main/course.schema.json",
+  "id": "redis",
+  "name": "Redis Learn",
+  "subject": "Redis & In-Memory Data",
+  "description": "Master Redis in five-minute bites: data structures, persistence, replication, Sentinel, Cluster, Lua scripting, caching patterns, and Redis 8.",
+  "brand": {
+    "color": "#eb2a1d",
+    "scale": {
+      "50": "#fef2f2",
+      "100": "#fee2e2",
+      "200": "#fecaca",
+      "300": "#fca5a5",
+      "400": "#f87171",
+      "500": "#ef4444",
+      "600": "#eb2a1d",
+      "700": "#b91c1c",
+      "800": "#991b1b",
+      "900": "#7f1d1d",
+      "950": "#450a0a"
+    },
+    "gradient": [
+      "#eb2a1d",
+      "#f87171",
+      "#b91c1c"
+    ],
+    "gradientDark": [
+      "#f87171",
+      "#ef4444",
+      "#b91c1c"
+    ]
+  },
+  "home": {
+    "badge": "Redis 8 & Valkey Compatible",
+    "headline": [
+      "Master Redis and in-memory caching in ",
+      "five-minute bites",
+      "."
+    ],
+    "searchExamples": [
+      "HSET",
+      "CLUSTER",
+      "pipeline"
+    ],
+    "featuredLesson": "what-is-redis",
+    "featuredCode": {
+      "lang": "bash",
+      "code": "# Distributed rate limiting with Sorted Sets\nZREMRANGEBYSCORE ratelimit:ip 0 (now - 60)\nZCARD ratelimit:ip\nZADD ratelimit:ip now now\nEXPIRE ratelimit:ip 60"
+    },
+    "quizPreview": {
+      "topic": "fundamentals",
+      "prompt": "Why is each individual Redis command atomic?",
+      "options": [
+        "Because Redis locks every key before writing to it",
+        "Because commands execute one at a time on a single thread",
+        "Because Redis runs every command inside a transaction with rollback",
+        "Because clients coordinate with each other before sending commands"
+      ],
+      "selected": 1
+    }
+  },
+  "codeLanguages": [
+    "bash",
+    "json",
+    "lua",
+    "yaml"
+  ]
+}

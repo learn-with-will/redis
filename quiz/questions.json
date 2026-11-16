@@ -1,0 +1,4140 @@
+[
+  {
+    "id": "fundamentals-q01",
+    "topic": "fundamentals",
+    "lesson": "what-is-redis",
+    "type": "single-choice",
+    "prompt": "Which phrase best describes what Redis is?",
+    "explanation": "Redis (REmote DIctionary Server) keeps data in memory and maps keys to rich data structures (strings, lists, hashes, sets, sorted sets, and more), accessed over the network.",
+    "options": [
+      {
+        "id": "a",
+        "text": "A relational database that stores tables on disk"
+      },
+      {
+        "id": "b",
+        "text": "An in-memory key-value store that serves rich data structures over the network"
+      },
+      {
+        "id": "c",
+        "text": "A programming language for data processing"
+      },
+      {
+        "id": "d",
+        "text": "A file system optimized for large binary files"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "fundamentals-q02",
+    "topic": "fundamentals",
+    "lesson": "single-threaded-execution",
+    "type": "single-choice",
+    "prompt": "Why is each individual Redis command atomic?",
+    "explanation": "Redis executes command logic in a single thread, running each command to completion before the next — so a single command can never be observed half-done.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Because Redis locks every key before writing to it"
+      },
+      {
+        "id": "b",
+        "text": "Because commands are executed one at a time in a single thread, so none can interleave"
+      },
+      {
+        "id": "c",
+        "text": "Because Redis runs every command inside a database transaction with rollback"
+      },
+      {
+        "id": "d",
+        "text": "Because clients coordinate with each other before sending commands"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "fundamentals-q03",
+    "topic": "fundamentals",
+    "lesson": "redis-vs-memcached-and-rdbms",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Redis are true? Select all that apply.",
+    "explanation": "Redis persists via RDB/AOF, plays all three roles, and blocks on slow commands (so avoid them). It is NOT entirely single-threaded — only command execution is; it uses extra threads for I/O and background work.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Redis can persist data to disk with RDB snapshots and/or the AOF"
+      },
+      {
+        "id": "b",
+        "text": "Redis can be used as a cache, a database, and a message broker"
+      },
+      {
+        "id": "c",
+        "text": "Redis is entirely single-threaded and never uses any other threads"
+      },
+      {
+        "id": "d",
+        "text": "A single slow command can block other clients"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "fundamentals-q04",
+    "topic": "fundamentals",
+    "lesson": "redis-licensing-and-valkey",
+    "type": "single-choice",
+    "prompt": "Since Redis 8.0 (May 2025), which licensing statement is correct?",
+    "explanation": "Redis 8.0 added AGPLv3 (an OSI-approved open-source license) alongside the source-available RSALv2 and SSPLv1, making Redis tri-licensed. It did not return to BSD; Valkey is the BSD-licensed fork.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Redis is closed source with no source available"
+      },
+      {
+        "id": "b",
+        "text": "Redis is available under a choice of AGPLv3 (open source), RSALv2, or SSPLv1"
+      },
+      {
+        "id": "c",
+        "text": "Redis is only under the SSPL and is not open source"
+      },
+      {
+        "id": "d",
+        "text": "Redis returned to the BSD-3-Clause license"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "fundamentals-q05",
+    "topic": "fundamentals",
+    "lesson": "what-is-redis",
+    "type": "fill-blank",
+    "prompt": "The BSD-licensed fork of Redis 7.2.4, created under the Linux Foundation in 2024, is called ______. (one word)",
+    "explanation": "Valkey was forked from Redis 7.2.4 after the March 2024 relicense and is governed by the Linux Foundation under the permissive BSD license.",
+    "answer": [
+      "Valkey",
+      "valkey"
+    ]
+  },
+  {
+    "id": "fundamentals-q06",
+    "topic": "fundamentals",
+    "lesson": "single-threaded-execution",
+    "type": "match-pair",
+    "prompt": "Match each store to the best short description.",
+    "explanation": "Redis is a rich in-memory store; Memcached is a plain string cache; a relational database is durable and queryable; Valkey is the open-source fork of Redis.",
+    "pairs": [
+      {
+        "left": "Redis",
+        "right": "In-memory data-structure store (cache, DB, and broker)"
+      },
+      {
+        "left": "Memcached",
+        "right": "Simple multi-threaded string cache"
+      },
+      {
+        "left": "Relational database",
+        "right": "On-disk, queryable, ACID with rollback"
+      },
+      {
+        "left": "Valkey",
+        "right": "BSD-licensed community fork of Redis"
+      }
+    ]
+  },
+  {
+    "id": "fundamentals-q07",
+    "topic": "fundamentals",
+    "lesson": "installing-and-running-redis",
+    "type": "single-choice",
+    "prompt": "What is the default TCP port a Redis server listens on?",
+    "explanation": "Redis listens on TCP port 6379 by default (5432 is PostgreSQL, 3306 is MySQL).",
+    "options": [
+      {
+        "id": "a",
+        "text": "5432"
+      },
+      {
+        "id": "b",
+        "text": "3306"
+      },
+      {
+        "id": "c",
+        "text": "6379"
+      },
+      {
+        "id": "d",
+        "text": "8080"
+      }
+    ],
+    "answer": "c"
+  },
+  {
+    "id": "fundamentals-q08",
+    "topic": "fundamentals",
+    "lesson": "connecting-with-redis-cli",
+    "type": "single-choice",
+    "prompt": "How many logical databases does a Redis server expose by default, and how do you switch between them?",
+    "explanation": "By default there are 16 logical databases (0–15); SELECT changes the current one. They share the same server and config.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Unlimited databases, switched with USE"
+      },
+      {
+        "id": "b",
+        "text": "16 databases numbered 0–15, switched with SELECT"
+      },
+      {
+        "id": "c",
+        "text": "One database only; there is no switching"
+      },
+      {
+        "id": "d",
+        "text": "8 databases numbered 1–8, switched with SWITCH"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "fundamentals-q09",
+    "topic": "fundamentals",
+    "lesson": "logical-databases-select",
+    "type": "multiple-choice",
+    "prompt": "Which statements about redis-cli and RESP are true? Select all that apply.",
+    "explanation": "Command names are case-insensitive and RESP replies are typed; you can pass a command as arguments to redis-cli. But KEYS are case-sensitive.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Command names are case-insensitive (SET and set both work)"
+      },
+      {
+        "id": "b",
+        "text": "Replies are typed: simple strings, errors, integers, bulk strings, and arrays"
+      },
+      {
+        "id": "c",
+        "text": "Keys are case-insensitive too"
+      },
+      {
+        "id": "d",
+        "text": "You can run a single command like `redis-cli PING` without entering the interactive prompt"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "fundamentals-q10",
+    "topic": "fundamentals",
+    "lesson": "the-resp-protocol",
+    "type": "single-choice",
+    "prompt": "Why are the 16 logical databases a poor choice for isolating separate tenants?",
+    "explanation": "Logical databases are lightweight namespaces on one server — same memory and config, wiped together by FLUSHALL, and unsupported in Cluster. Use separate instances or key prefixes for isolation.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They each require a separate license"
+      },
+      {
+        "id": "b",
+        "text": "They share the same server, memory, and configuration, and don't exist in Redis Cluster"
+      },
+      {
+        "id": "c",
+        "text": "They can only hold string values"
+      },
+      {
+        "id": "d",
+        "text": "They are read-only"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "fundamentals-q11",
+    "topic": "fundamentals",
+    "lesson": "installing-and-running-redis",
+    "type": "fill-blank",
+    "prompt": "The command that deletes every key in the CURRENT database only is ______. (one word)",
+    "explanation": "FLUSHDB clears the current database; FLUSHALL clears all of them. Both are immediate and irreversible.",
+    "answer": [
+      "FLUSHDB",
+      "flushdb"
+    ]
+  },
+  {
+    "id": "fundamentals-q12",
+    "topic": "fundamentals",
+    "lesson": "connecting-with-redis-cli",
+    "type": "single-choice",
+    "prompt": "Which command gives you a quick health check that the connection to Redis is working?",
+    "explanation": "PING returns PONG when the server is reachable and responsive. SAVE, SHUTDOWN, and FLUSHALL all have significant side effects.",
+    "options": [
+      {
+        "id": "a",
+        "text": "PING (expect PONG)"
+      },
+      {
+        "id": "b",
+        "text": "SAVE"
+      },
+      {
+        "id": "c",
+        "text": "SHUTDOWN"
+      },
+      {
+        "id": "d",
+        "text": "FLUSHALL"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "keys-and-strings-q01",
+    "topic": "keys-and-strings",
+    "lesson": "keyspace-and-key-naming",
+    "type": "single-choice",
+    "prompt": "Why should you avoid KEYS on a large production database?",
+    "explanation": "KEYS scans every key in one command, and since commands run in a single thread, that can block all other clients on a big keyspace. Use SCAN instead.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It permanently deletes matching keys"
+      },
+      {
+        "id": "b",
+        "text": "It is O(N) over the whole keyspace and can block the server for everyone"
+      },
+      {
+        "id": "c",
+        "text": "It only works on string values"
+      },
+      {
+        "id": "d",
+        "text": "It requires authentication that SCAN does not"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "keys-and-strings-q02",
+    "topic": "keys-and-strings",
+    "lesson": "inspecting-keys-del-exists-type",
+    "type": "single-choice",
+    "prompt": "How do you know a SCAN iteration is complete?",
+    "explanation": "SCAN is cursor-based: you pass the returned cursor back on each call, and iteration is finished when the cursor comes back as 0 (an individual call may return zero keys but a non-zero cursor).",
+    "options": [
+      {
+        "id": "a",
+        "text": "When it returns an empty array of keys"
+      },
+      {
+        "id": "b",
+        "text": "When the returned cursor is 0"
+      },
+      {
+        "id": "c",
+        "text": "When it returns the same keys twice"
+      },
+      {
+        "id": "d",
+        "text": "SCAN always finishes in a single call"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "keys-and-strings-q03",
+    "topic": "keys-and-strings",
+    "lesson": "keys-vs-scan",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Redis Strings are true? Select all that apply.",
+    "explanation": "Strings are binary-safe up to 512 MB; INCR errors on non-integers; MSET/MGET are multi-key. A plain SET CLEARS the TTL unless you pass KEEPTTL.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They are binary-safe and can hold up to 512 MB"
+      },
+      {
+        "id": "b",
+        "text": "INCR works only if the current value parses as an integer"
+      },
+      {
+        "id": "c",
+        "text": "A plain SET keeps any existing TTL by default"
+      },
+      {
+        "id": "d",
+        "text": "MSET and MGET operate on several keys in one command"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "keys-and-strings-q04",
+    "topic": "keys-and-strings",
+    "lesson": "string-type-and-binary-safety",
+    "type": "single-choice",
+    "prompt": "What does `SET lock:job1 \"owner\" NX` return if lock:job1 already exists?",
+    "explanation": "NX means 'only set if the key does not exist.' When the key already exists, SET does nothing and returns (nil).",
+    "options": [
+      {
+        "id": "a",
+        "text": "OK — it overwrites the value"
+      },
+      {
+        "id": "b",
+        "text": "(nil) — NX refuses to set because the key exists"
+      },
+      {
+        "id": "c",
+        "text": "(error) — NX is not a valid option"
+      },
+      {
+        "id": "d",
+        "text": "(integer) 0"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "keys-and-strings-q05",
+    "topic": "keys-and-strings",
+    "lesson": "atomic-counters-incr-decr",
+    "type": "fill-blank",
+    "prompt": "The command that atomically increases the integer stored at a key by 1 is ______. (one word)",
+    "explanation": "INCR adds 1 atomically (creating the key as 0 first if needed). Because it's a single command, concurrent increments never lose counts.",
+    "answer": [
+      "INCR",
+      "incr"
+    ]
+  },
+  {
+    "id": "keys-and-strings-q06",
+    "topic": "keys-and-strings",
+    "lesson": "set-options-nx-xx-get",
+    "type": "match-pair",
+    "prompt": "Match each command to what it does.",
+    "explanation": "EXISTS checks presence, TYPE reports the type, APPEND extends a string (returning its new length), and INCRBYFLOAT does floating-point addition.",
+    "pairs": [
+      {
+        "left": "EXISTS",
+        "right": "Reports whether a key is present"
+      },
+      {
+        "left": "TYPE",
+        "right": "Returns the value's data type"
+      },
+      {
+        "left": "APPEND",
+        "right": "Adds to a string and returns the new length"
+      },
+      {
+        "left": "INCRBYFLOAT",
+        "right": "Adds a floating-point amount to a number"
+      }
+    ]
+  },
+  {
+    "id": "lists-and-hashes-q01",
+    "topic": "lists-and-hashes",
+    "lesson": "list-data-structure-basics",
+    "type": "single-choice",
+    "prompt": "What is the time complexity of pushing or popping at the ends of a Redis List?",
+    "explanation": "Lists are linked lists, so operations at the head/tail (LPUSH/RPUSH/LPOP/RPOP) are O(1). Indexed middle access (LINDEX) is O(N).",
+    "options": [
+      {
+        "id": "a",
+        "text": "O(N) — it walks the whole list"
+      },
+      {
+        "id": "b",
+        "text": "O(1) — constant time, regardless of length"
+      },
+      {
+        "id": "c",
+        "text": "O(log N)"
+      },
+      {
+        "id": "d",
+        "text": "It depends on the value size only"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "lists-and-hashes-q02",
+    "topic": "lists-and-hashes",
+    "lesson": "list-range-and-inspection",
+    "type": "single-choice",
+    "prompt": "Which pair of commands implements a FIFO queue?",
+    "explanation": "For first-in-first-out, push onto the tail (RPUSH) and pop from the head (LPOP). Using the same end (LPUSH+LPOP) gives a LIFO stack.",
+    "options": [
+      {
+        "id": "a",
+        "text": "LPUSH to add, LPOP to remove"
+      },
+      {
+        "id": "b",
+        "text": "RPUSH to add, LPOP to remove"
+      },
+      {
+        "id": "c",
+        "text": "RPUSH to add, RPOP to remove"
+      },
+      {
+        "id": "d",
+        "text": "SET to add, GET to remove"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "lists-and-hashes-q03",
+    "topic": "lists-and-hashes",
+    "lesson": "capped-lists-with-ltrim",
+    "type": "multiple-choice",
+    "prompt": "Which statements about List commands are true? Select all that apply.",
+    "explanation": "LTRIM caps a list, BLPOP blocks efficiently, and LMOVE is an atomic pop-and-push. LINDEX is O(N), not O(1).",
+    "options": [
+      {
+        "id": "a",
+        "text": "LTRIM key 0 99 keeps only the first 100 elements"
+      },
+      {
+        "id": "b",
+        "text": "BLPOP blocks until an element is available or the timeout elapses"
+      },
+      {
+        "id": "c",
+        "text": "LMOVE pops from one list and pushes to another atomically"
+      },
+      {
+        "id": "d",
+        "text": "LINDEX on a huge list is O(1)"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "lists-and-hashes-q04",
+    "topic": "lists-and-hashes",
+    "lesson": "blocking-list-pops",
+    "type": "single-choice",
+    "prompt": "Why prefer BLPOP over an LPOP polling loop for a worker consuming a queue?",
+    "explanation": "BLPOP blocks until work arrives (up to a timeout), avoiding the wasted CPU and round trips of polling an empty list with LPOP.",
+    "options": [
+      {
+        "id": "a",
+        "text": "BLPOP can pop multiple keys but LPOP cannot exist"
+      },
+      {
+        "id": "b",
+        "text": "BLPOP waits efficiently for an item instead of repeatedly checking an empty queue"
+      },
+      {
+        "id": "c",
+        "text": "BLPOP guarantees the job is never removed"
+      },
+      {
+        "id": "d",
+        "text": "LPOP is not allowed in production"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "lists-and-hashes-q05",
+    "topic": "lists-and-hashes",
+    "lesson": "list-data-structure-basics",
+    "type": "fill-blank",
+    "prompt": "To keep a list capped at its most recent 100 items after LPUSH, you run LTRIM key 0 ______. (a number)",
+    "explanation": "LTRIM key 0 99 keeps indexes 0 through 99 — 100 elements — and discards the rest.",
+    "answer": [
+      "99"
+    ]
+  },
+  {
+    "id": "lists-and-hashes-q06",
+    "topic": "lists-and-hashes",
+    "lesson": "list-range-and-inspection",
+    "type": "single-choice",
+    "prompt": "Which problem does LMOVE (or BLMOVE) into a 'processing' list solve?",
+    "explanation": "Atomically moving a job from 'pending' to 'processing' means a crashed worker's job still sits in the processing list and can be recovered, rather than being lost as a plain LPOP would.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It makes list reads O(1)"
+      },
+      {
+        "id": "b",
+        "text": "It prevents losing an in-flight job if the worker crashes before finishing"
+      },
+      {
+        "id": "c",
+        "text": "It compresses the list to save memory"
+      },
+      {
+        "id": "d",
+        "text": "It sorts the list by value"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "lists-and-hashes-q07",
+    "topic": "lists-and-hashes",
+    "lesson": "hash-structure-and-field-values",
+    "type": "single-choice",
+    "prompt": "What does a Redis Hash store under a single key?",
+    "explanation": "A Hash maps field names to values under one key, which makes it a natural fit for modeling an object like a user or product.",
+    "options": [
+      {
+        "id": "a",
+        "text": "An ordered list of elements"
+      },
+      {
+        "id": "b",
+        "text": "A set of field-value pairs (a small dictionary)"
+      },
+      {
+        "id": "c",
+        "text": "A sorted collection ranked by score"
+      },
+      {
+        "id": "d",
+        "text": "A single string value only"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "lists-and-hashes-q08",
+    "topic": "lists-and-hashes",
+    "lesson": "hash-crud-hset-hget-hdel",
+    "type": "single-choice",
+    "prompt": "What does HSET return?",
+    "explanation": "HSET returns how many fields were newly created; updates to existing fields still happen but don't add to that count.",
+    "options": [
+      {
+        "id": "a",
+        "text": "OK"
+      },
+      {
+        "id": "b",
+        "text": "The total number of fields in the hash"
+      },
+      {
+        "id": "c",
+        "text": "The number of NEW fields added (existing ones are updated but not counted)"
+      },
+      {
+        "id": "d",
+        "text": "The value that was overwritten"
+      }
+    ],
+    "answer": "c"
+  },
+  {
+    "id": "lists-and-hashes-q09",
+    "topic": "lists-and-hashes",
+    "lesson": "hash-bulk-and-counters",
+    "type": "multiple-choice",
+    "prompt": "Which are genuine advantages of one hash over many separate string keys for an object? Select all that apply.",
+    "explanation": "Hashes give one-key management, memory savings, and one-shot fetch. Per-field TTLs are NOT the default — they require Redis 7.4+; normally a TTL applies to the whole key.",
+    "options": [
+      {
+        "id": "a",
+        "text": "You can delete the whole object with a single DEL"
+      },
+      {
+        "id": "b",
+        "text": "Small hashes use less memory via a compact listpack encoding"
+      },
+      {
+        "id": "c",
+        "text": "You can fetch the whole object with one HGETALL"
+      },
+      {
+        "id": "d",
+        "text": "Every field automatically gets its own independent TTL by default"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "lists-and-hashes-q10",
+    "topic": "lists-and-hashes",
+    "lesson": "hash-memory-efficiency",
+    "type": "single-choice",
+    "prompt": "Why can HGETALL be risky on a very large hash?",
+    "explanation": "HGETALL doesn't paginate — it returns all fields at once, which is O(N) and can block the server on a huge hash. Use HSCAN to iterate instead.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It deletes fields as it reads them"
+      },
+      {
+        "id": "b",
+        "text": "It returns every field-value pair in one O(N) blocking command"
+      },
+      {
+        "id": "c",
+        "text": "It only works on hashes with fewer than 10 fields"
+      },
+      {
+        "id": "d",
+        "text": "It requires the hash to be sorted first"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "lists-and-hashes-q11",
+    "topic": "lists-and-hashes",
+    "lesson": "hash-structure-and-field-values",
+    "type": "fill-blank",
+    "prompt": "The command that atomically adds an integer to a numeric field of a hash is ______. (one word)",
+    "explanation": "HINCRBY adds an integer to a hash field atomically (HINCRBYFLOAT does the same for floating-point amounts).",
+    "answer": [
+      "HINCRBY",
+      "hincrby"
+    ]
+  },
+  {
+    "id": "lists-and-hashes-q12",
+    "topic": "lists-and-hashes",
+    "lesson": "hash-crud-hset-hget-hdel",
+    "type": "single-choice",
+    "prompt": "Which statement about HMSET is correct?",
+    "explanation": "HMSET is deprecated. Modern HSET accepts multiple field-value pairs, so HSET covers both single and multi-field writes.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It is the only way to set multiple fields"
+      },
+      {
+        "id": "b",
+        "text": "It is deprecated; HSET now accepts multiple field-value pairs"
+      },
+      {
+        "id": "c",
+        "text": "It sets a field only if it does not exist"
+      },
+      {
+        "id": "d",
+        "text": "It sets a TTL on each field"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "sets-and-sorted-sets-q01",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "set-data-structure-basics",
+    "type": "single-choice",
+    "prompt": "Which two properties define a Redis Set?",
+    "explanation": "A Set is an unordered collection of unique members; adding a duplicate has no effect. (Ordering by score describes a Sorted Set.)",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ordered by insertion, allows duplicates"
+      },
+      {
+        "id": "b",
+        "text": "Unordered, members are unique (no duplicates)"
+      },
+      {
+        "id": "c",
+        "text": "Ordered by score, members are unique"
+      },
+      {
+        "id": "d",
+        "text": "Ordered alphabetically, allows duplicates"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "sets-and-sorted-sets-q02",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "set-membership-and-manipulation",
+    "type": "single-choice",
+    "prompt": "Which command returns the members present in ALL of the given sets?",
+    "explanation": "SINTER computes the intersection (members in every set). SUNION is the union, SDIFF is the difference.",
+    "options": [
+      {
+        "id": "a",
+        "text": "SUNION"
+      },
+      {
+        "id": "b",
+        "text": "SDIFF"
+      },
+      {
+        "id": "c",
+        "text": "SINTER"
+      },
+      {
+        "id": "d",
+        "text": "SMEMBERS"
+      }
+    ],
+    "answer": "c"
+  },
+  {
+    "id": "sets-and-sorted-sets-q03",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "set-algebra-sinter-sunion-sdiff",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Set commands are true? Select all that apply.",
+    "explanation": "SADD counts new members, SINTERCARD gives just the intersection size, and SISMEMBER tests membership. SMEMBERS is O(N) and unpaginated — use SSCAN for large sets.",
+    "options": [
+      {
+        "id": "a",
+        "text": "SADD returns the number of newly added members"
+      },
+      {
+        "id": "b",
+        "text": "SINTERCARD returns the size of an intersection without materializing it"
+      },
+      {
+        "id": "c",
+        "text": "SISMEMBER tests whether a member is in the set"
+      },
+      {
+        "id": "d",
+        "text": "SMEMBERS is a paginated, cheap way to read huge sets"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "sets-and-sorted-sets-q04",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "set-modeling-patterns",
+    "type": "single-choice",
+    "prompt": "You want to store the result of a set intersection to reuse it later. Which command helps?",
+    "explanation": "SINTERSTORE writes the intersection into a destination key so you can reuse it, rather than recomputing with SINTER each time.",
+    "options": [
+      {
+        "id": "a",
+        "text": "SINTERSTORE"
+      },
+      {
+        "id": "b",
+        "text": "SINTER (it stores automatically)"
+      },
+      {
+        "id": "c",
+        "text": "SCARD"
+      },
+      {
+        "id": "d",
+        "text": "SPOP"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "sets-and-sorted-sets-q05",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "set-data-structure-basics",
+    "type": "fill-blank",
+    "prompt": "The command that returns the number of members in a set (its cardinality) is ______. (one word)",
+    "explanation": "SCARD returns the member count of a set in O(1).",
+    "answer": [
+      "SCARD",
+      "scard"
+    ]
+  },
+  {
+    "id": "sets-and-sorted-sets-q06",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "set-membership-and-manipulation",
+    "type": "single-choice",
+    "prompt": "Which is the best use case for a Set rather than a List?",
+    "explanation": "Sets shine when you need uniqueness and membership tests without ordering — like tags. Queues want a List; rankings want a Sorted Set.",
+    "options": [
+      {
+        "id": "a",
+        "text": "A FIFO job queue where order matters"
+      },
+      {
+        "id": "b",
+        "text": "The distinct tags on an article, where uniqueness matters and order does not"
+      },
+      {
+        "id": "c",
+        "text": "A ranked leaderboard"
+      },
+      {
+        "id": "d",
+        "text": "The last 100 log lines in order"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "sets-and-sorted-sets-q07",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "sorted-sets-scores-and-ordering",
+    "type": "single-choice",
+    "prompt": "What makes a Sorted Set different from a plain Set?",
+    "explanation": "A Sorted Set keeps unique members, each with a floating-point score, ordered by that score — giving you a live ranking.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It allows duplicate members"
+      },
+      {
+        "id": "b",
+        "text": "Each member has a numeric score, and members are kept ordered by score"
+      },
+      {
+        "id": "c",
+        "text": "It stores field-value pairs"
+      },
+      {
+        "id": "d",
+        "text": "It is limited to integer values"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "sets-and-sorted-sets-q08",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "zadd-and-score-updates",
+    "type": "single-choice",
+    "prompt": "Which command reads the three highest-scoring members with their scores?",
+    "explanation": "REV orders high-to-low so ranks 0–2 are the top three; WITHSCORES includes each score. Without REV you'd get the three LOWEST.",
+    "options": [
+      {
+        "id": "a",
+        "text": "ZRANGE key 0 2 WITHSCORES"
+      },
+      {
+        "id": "b",
+        "text": "ZRANGE key 0 2 REV WITHSCORES"
+      },
+      {
+        "id": "c",
+        "text": "ZSCORE key 0 2"
+      },
+      {
+        "id": "d",
+        "text": "ZRANK key 0 2"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "sets-and-sorted-sets-q09",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "range-queries-by-index-and-score",
+    "type": "multiple-choice",
+    "prompt": "Which statements about sorted sets are true? Select all that apply.",
+    "explanation": "Core operations are O(log N), ZINCRBY is atomic, and scoring by timestamp enables time-range queries. Members are unique — a member has exactly one score.",
+    "options": [
+      {
+        "id": "a",
+        "text": "ZADD and ZSCORE are O(log N)"
+      },
+      {
+        "id": "b",
+        "text": "ZINCRBY atomically changes a member's score"
+      },
+      {
+        "id": "c",
+        "text": "The score can be used as a timestamp for range queries"
+      },
+      {
+        "id": "d",
+        "text": "Members can appear multiple times with different scores"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "sets-and-sorted-sets-q10",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "building-leaderboards",
+    "type": "single-choice",
+    "prompt": "You need a priority queue where workers take the highest-priority job first. Which command fits?",
+    "explanation": "Use the score as priority; ZPOPMAX removes and returns the highest-scored member (BZPOPMAX blocks until one is available).",
+    "options": [
+      {
+        "id": "a",
+        "text": "ZRANK"
+      },
+      {
+        "id": "b",
+        "text": "ZPOPMAX (or blocking BZPOPMAX)"
+      },
+      {
+        "id": "c",
+        "text": "ZSCORE"
+      },
+      {
+        "id": "d",
+        "text": "ZCARD"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "sets-and-sorted-sets-q11",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "lexicographical-and-time-ranges",
+    "type": "fill-blank",
+    "prompt": "To read members whose score falls in a range (e.g. a time window), use Z________ key min max. (complete the command name)",
+    "explanation": "ZRANGEBYSCORE returns members within a [min, max] score range (the modern equivalent is ZRANGE key min max BYSCORE).",
+    "answer": [
+      "RANGEBYSCORE",
+      "rangebyscore",
+      "ZRANGEBYSCORE",
+      "zrangebyscore"
+    ]
+  },
+  {
+    "id": "sets-and-sorted-sets-q12",
+    "topic": "sets-and-sorted-sets",
+    "lesson": "sorted-sets-scores-and-ordering",
+    "type": "match-pair",
+    "prompt": "Match each command to what it returns.",
+    "explanation": "ZSCORE gives the score, ZREVRANK the descending rank, ZINCRBY the updated score, and ZCARD the member count.",
+    "pairs": [
+      {
+        "left": "ZSCORE",
+        "right": "A member's score value"
+      },
+      {
+        "left": "ZREVRANK",
+        "right": "A member's position counting from the top"
+      },
+      {
+        "left": "ZINCRBY",
+        "right": "The member's new score after adding to it"
+      },
+      {
+        "left": "ZCARD",
+        "right": "The number of members"
+      }
+    ]
+  },
+  {
+    "id": "expiration-and-memory-q01",
+    "topic": "expiration-and-memory",
+    "lesson": "expire-and-ttl-basics",
+    "type": "single-choice",
+    "prompt": "What does `TTL key` return for a key that exists but has no expiry set?",
+    "explanation": "TTL returns -1 when the key exists but has no expiry, and -2 when the key does not exist. A positive number is the seconds remaining.",
+    "options": [
+      {
+        "id": "a",
+        "text": "0"
+      },
+      {
+        "id": "b",
+        "text": "-1"
+      },
+      {
+        "id": "c",
+        "text": "-2"
+      },
+      {
+        "id": "d",
+        "text": "(nil)"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q02",
+    "topic": "expiration-and-memory",
+    "lesson": "persist-and-clearing-ttl",
+    "type": "multiple-choice",
+    "prompt": "How does Redis expire keys? Select all that apply.",
+    "explanation": "Expiration is passive plus active (eventual, not a precise timer), but reads never return an expired value — it's logically gone the moment it expires.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Passively — an expired key is removed when a client next accesses it"
+      },
+      {
+        "id": "b",
+        "text": "Actively — a background cycle samples keys with TTLs and removes expired ones"
+      },
+      {
+        "id": "c",
+        "text": "With a precise per-key timer that fires the exact millisecond the TTL hits zero"
+      },
+      {
+        "id": "d",
+        "text": "A read will never return a value that has already expired"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "expiration-and-memory-q03",
+    "topic": "expiration-and-memory",
+    "lesson": "passive-vs-active-expiration",
+    "type": "single-choice",
+    "prompt": "You run `SET k \"v\" EX 100`, then later `SET k \"v2\"`. What is the TTL of k afterward?",
+    "explanation": "A full-replacement SET clears any existing TTL. To keep it you'd use SET k \"v2\" KEEPTTL or re-apply EXPIRE.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Still around 100 seconds"
+      },
+      {
+        "id": "b",
+        "text": "-1 (the TTL was cleared by the plain SET)"
+      },
+      {
+        "id": "c",
+        "text": "-2 (the key was deleted)"
+      },
+      {
+        "id": "d",
+        "text": "200 seconds"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q04",
+    "topic": "expiration-and-memory",
+    "lesson": "absolute-expiration-and-expiretime",
+    "type": "single-choice",
+    "prompt": "How is expiration different from eviction?",
+    "explanation": "A TTL is a deadline you set on one key; eviction is triggered by hitting maxmemory and can remove keys (even ones without TTLs) according to the configured policy.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They are two names for the same thing"
+      },
+      {
+        "id": "b",
+        "text": "Expiration removes a key when its own TTL is due; eviction removes keys under memory pressure per a policy"
+      },
+      {
+        "id": "c",
+        "text": "Expiration only happens in Redis Cluster; eviction only on a single node"
+      },
+      {
+        "id": "d",
+        "text": "Eviction applies only to keys that have a TTL"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q05",
+    "topic": "expiration-and-memory",
+    "lesson": "expire-and-ttl-basics",
+    "type": "fill-blank",
+    "prompt": "The command that removes a key's TTL so it stops expiring is ______. (one word)",
+    "explanation": "PERSIST removes the expiry, leaving the key in place until it is explicitly deleted (TTL then returns -1).",
+    "answer": [
+      "PERSIST",
+      "persist"
+    ]
+  },
+  {
+    "id": "expiration-and-memory-q06",
+    "topic": "expiration-and-memory",
+    "lesson": "persist-and-clearing-ttl",
+    "type": "single-choice",
+    "prompt": "Which single command sets a value AND a 60-second expiry atomically?",
+    "explanation": "SET with the EX option sets the value and the relative expiry in one atomic command, avoiding a window where the key exists without a TTL.",
+    "options": [
+      {
+        "id": "a",
+        "text": "SET key value EX 60"
+      },
+      {
+        "id": "b",
+        "text": "SET key value; EXPIRE key 60 (two commands)"
+      },
+      {
+        "id": "c",
+        "text": "TTL key 60"
+      },
+      {
+        "id": "d",
+        "text": "PERSIST key 60"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "advanced-data-types-q01",
+    "topic": "advanced-data-types",
+    "lesson": "bitmaps-per-bit-flags",
+    "type": "single-choice",
+    "prompt": "Which statement about Redis Bitmaps is correct?",
+    "explanation": "Bitmap commands (SETBIT, GETBIT, BITCOUNT, BITOP) treat a String as an array of bits — there is no separate 'bitmap' type.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They are a distinct data type separate from strings"
+      },
+      {
+        "id": "b",
+        "text": "They are bit-level operations performed on ordinary String values"
+      },
+      {
+        "id": "c",
+        "text": "They can only store 64 bits"
+      },
+      {
+        "id": "d",
+        "text": "They automatically compress sparse data"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "advanced-data-types-q02",
+    "topic": "advanced-data-types",
+    "lesson": "bitmap-analytics-bitcount-bitop",
+    "type": "single-choice",
+    "prompt": "What does a HyperLogLog give you?",
+    "explanation": "A HyperLogLog estimates cardinality (distinct count) in a fixed ~12 KB with about 0.81% error; it does not store or return the individual elements.",
+    "options": [
+      {
+        "id": "a",
+        "text": "An exact count and the ability to list all members"
+      },
+      {
+        "id": "b",
+        "text": "An approximate count of distinct elements using fixed, tiny memory"
+      },
+      {
+        "id": "c",
+        "text": "A sorted list of the most frequent elements"
+      },
+      {
+        "id": "d",
+        "text": "A way to store and retrieve large blobs"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "advanced-data-types-q03",
+    "topic": "advanced-data-types",
+    "lesson": "hyperloglog-concept-cardinality",
+    "type": "multiple-choice",
+    "prompt": "Which statements are true? Select all that apply.",
+    "explanation": "PFADD/PFCOUNT work as described, HLL memory is near-constant, and BITOP combines bitmaps. You canNOT list a HyperLogLog's members.",
+    "options": [
+      {
+        "id": "a",
+        "text": "PFADD adds elements to a HyperLogLog; PFCOUNT returns the estimated distinct count"
+      },
+      {
+        "id": "b",
+        "text": "A HyperLogLog uses roughly the same memory whether it holds thousands or billions of elements"
+      },
+      {
+        "id": "c",
+        "text": "You can read individual elements back out of a HyperLogLog"
+      },
+      {
+        "id": "d",
+        "text": "BITOP can combine two bitmaps with AND/OR/XOR/NOT"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "advanced-data-types-q04",
+    "topic": "advanced-data-types",
+    "lesson": "hyperloglog-commands-pfadd-pfcount",
+    "type": "single-choice",
+    "prompt": "For which task is a HyperLogLog the WRONG choice?",
+    "explanation": "HyperLogLog is approximate (~0.81% error) and can't list members, so it's unsuitable for exact, auditable counts like billing — use a Set or a database.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Reporting roughly how many unique visitors a huge site had today"
+      },
+      {
+        "id": "b",
+        "text": "Billing each customer for the exact number of distinct API callers, auditable"
+      },
+      {
+        "id": "c",
+        "text": "Estimating distinct search terms across billions of queries"
+      },
+      {
+        "id": "d",
+        "text": "Rolling daily unique estimates up into a monthly total with PFMERGE"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "advanced-data-types-q05",
+    "topic": "advanced-data-types",
+    "lesson": "bitmaps-per-bit-flags",
+    "type": "fill-blank",
+    "prompt": "The command that counts the number of set (1) bits in a bitmap is ______. (one word)",
+    "explanation": "BITCOUNT counts the 1-bits, optionally within a byte (or BIT) range.",
+    "answer": [
+      "BITCOUNT",
+      "bitcount"
+    ]
+  },
+  {
+    "id": "advanced-data-types-q06",
+    "topic": "advanced-data-types",
+    "lesson": "bitmap-analytics-bitcount-bitop",
+    "type": "single-choice",
+    "prompt": "When is a bitmap a poor fit for tracking boolean state per item?",
+    "explanation": "A bitmap's size is driven by the highest offset you set, so large, sparse IDs waste huge amounts of space. Bitmaps shine with dense integer IDs.",
+    "options": [
+      {
+        "id": "a",
+        "text": "When item IDs are dense small integers"
+      },
+      {
+        "id": "b",
+        "text": "When item IDs are large and sparse (e.g. random 64-bit numbers)"
+      },
+      {
+        "id": "c",
+        "text": "When you need to count set bits"
+      },
+      {
+        "id": "d",
+        "text": "When you want to combine two days with BITOP"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "messaging-and-streams-q01",
+    "topic": "messaging-and-streams",
+    "lesson": "pubsub-architecture-and-channels",
+    "type": "single-choice",
+    "prompt": "What is the delivery model of Redis Pub/Sub?",
+    "explanation": "Pub/Sub delivers messages only to clients subscribed at publish time and stores nothing — so a subscriber that isn't listening misses the message permanently.",
+    "options": [
+      {
+        "id": "a",
+        "text": "At-least-once, with messages persisted until acknowledged"
+      },
+      {
+        "id": "b",
+        "text": "Fire-and-forget / at-most-once — messages aren't stored"
+      },
+      {
+        "id": "c",
+        "text": "Exactly-once, guaranteed"
+      },
+      {
+        "id": "d",
+        "text": "Ordered and durable, like a log"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "messaging-and-streams-q02",
+    "topic": "messaging-and-streams",
+    "lesson": "pubsub-commands-publish-subscribe",
+    "type": "single-choice",
+    "prompt": "What does the integer returned by PUBLISH mean?",
+    "explanation": "PUBLISH returns how many subscribers received the message. It says nothing about whether they successfully processed it.",
+    "options": [
+      {
+        "id": "a",
+        "text": "The number of clients that received the message"
+      },
+      {
+        "id": "b",
+        "text": "The number of messages stored for later delivery"
+      },
+      {
+        "id": "c",
+        "text": "Confirmation that every subscriber processed the message"
+      },
+      {
+        "id": "d",
+        "text": "The channel's total message count"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "messaging-and-streams-q03",
+    "topic": "messaging-and-streams",
+    "lesson": "pattern-subscriptions-psubscribe",
+    "type": "multiple-choice",
+    "prompt": "Which are true about Pub/Sub? Select all that apply.",
+    "explanation": "No history, pattern subscriptions, and the RESP2 subscribed-connection restriction are all true. Pub/Sub does NOT persist or replay messages.",
+    "options": [
+      {
+        "id": "a",
+        "text": "A subscriber that connects later cannot see past messages"
+      },
+      {
+        "id": "b",
+        "text": "PSUBSCRIBE subscribes to channels by glob pattern"
+      },
+      {
+        "id": "c",
+        "text": "Messages are written to disk and can be replayed"
+      },
+      {
+        "id": "d",
+        "text": "On a RESP2 connection in subscribe mode, you can only run (un)subscribe commands"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "messaging-and-streams-q04",
+    "topic": "messaging-and-streams",
+    "lesson": "pubsub-limitations-and-pitfalls",
+    "type": "single-choice",
+    "prompt": "You must not lose 'process this payment' messages even if the worker briefly restarts. What should you use?",
+    "explanation": "Streams persist entries and support at-least-once delivery via consumer groups and XACK, so a restarting worker can catch up — Pub/Sub would drop messages sent while it was down.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Pub/Sub with PSUBSCRIBE"
+      },
+      {
+        "id": "b",
+        "text": "Streams with consumer groups and acknowledgements"
+      },
+      {
+        "id": "c",
+        "text": "Pub/Sub on a dedicated connection"
+      },
+      {
+        "id": "d",
+        "text": "Sharded Pub/Sub"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "messaging-and-streams-q05",
+    "topic": "messaging-and-streams",
+    "lesson": "pubsub-architecture-and-channels",
+    "type": "fill-blank",
+    "prompt": "The Cluster-friendly variant of PUBLISH that keeps a channel on the shard that owns it is ______. (one word)",
+    "explanation": "Sharded Pub/Sub (SPUBLISH/SSUBSCRIBE, added in Redis 7.0) scopes a channel to one shard so publishing scales on Cluster.",
+    "answer": [
+      "SPUBLISH",
+      "spublish"
+    ]
+  },
+  {
+    "id": "messaging-and-streams-q06",
+    "topic": "messaging-and-streams",
+    "lesson": "pubsub-commands-publish-subscribe",
+    "type": "single-choice",
+    "prompt": "Why is cache invalidation over Pub/Sub often paired with TTLs?",
+    "explanation": "Because a briefly-disconnected server can miss the invalidation broadcast, a TTL guarantees the stale entry eventually expires anyway — a safety net for the at-most-once delivery.",
+    "options": [
+      {
+        "id": "a",
+        "text": "TTLs make Pub/Sub messages persistent"
+      },
+      {
+        "id": "b",
+        "text": "A server that misses the invalidation message will still drop the stale value when its TTL expires"
+      },
+      {
+        "id": "c",
+        "text": "Pub/Sub requires a TTL to function"
+      },
+      {
+        "id": "d",
+        "text": "TTLs increase PUBLISH throughput"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "messaging-and-streams-q07",
+    "topic": "messaging-and-streams",
+    "lesson": "stream-data-type-and-append-log",
+    "type": "single-choice",
+    "prompt": "How does a Stream differ from Pub/Sub?",
+    "explanation": "Streams are an append-only, persistent log — entries stay and can be re-read by ID. Pub/Sub is fire-and-forget with no history.",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Stream persists its entries so they can be replayed by ID; Pub/Sub stores nothing"
+      },
+      {
+        "id": "b",
+        "text": "A Stream delivers to every subscriber; Pub/Sub delivers to one"
+      },
+      {
+        "id": "c",
+        "text": "A Stream cannot have more than one consumer"
+      },
+      {
+        "id": "d",
+        "text": "There is no real difference"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "messaging-and-streams-q08",
+    "topic": "messaging-and-streams",
+    "lesson": "appending-and-reading-streams",
+    "type": "single-choice",
+    "prompt": "What does passing `*` as the ID to XADD do?",
+    "explanation": "`*` asks Redis to generate the next ID (a millisecond timestamp plus a sequence number), keeping the stream strictly ordered.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Deletes the oldest entry"
+      },
+      {
+        "id": "b",
+        "text": "Tells Redis to auto-generate the next (increasing) entry ID"
+      },
+      {
+        "id": "c",
+        "text": "Reads all entries"
+      },
+      {
+        "id": "d",
+        "text": "Acknowledges the entry"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "messaging-and-streams-q09",
+    "topic": "messaging-and-streams",
+    "lesson": "consumer-groups-and-distributed-workers",
+    "type": "multiple-choice",
+    "prompt": "Which statements about consumer groups are true? Select all that apply.",
+    "explanation": "Consumer groups split work, track unacked entries in the PEL, and clear them with XACK. XACK does NOT delete the entry from the stream itself — trimming (MAXLEN/XTRIM) does that.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Each entry is delivered to one consumer in the group, not all of them"
+      },
+      {
+        "id": "b",
+        "text": "An unacknowledged entry stays in the Pending Entries List (PEL)"
+      },
+      {
+        "id": "c",
+        "text": "XACK removes an entry from the PEL"
+      },
+      {
+        "id": "d",
+        "text": "Entries are automatically deleted from the stream once acknowledged"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "messaging-and-streams-q10",
+    "topic": "messaging-and-streams",
+    "lesson": "stream-acknowledgements-and-recovery",
+    "type": "single-choice",
+    "prompt": "A consumer reads an entry with XREADGROUP but crashes before acknowledging it. What happens?",
+    "explanation": "Because delivery is at-least-once, the unacknowledged entry remains pending and another consumer can claim and finish it — nothing is silently lost.",
+    "options": [
+      {
+        "id": "a",
+        "text": "The entry is lost permanently"
+      },
+      {
+        "id": "b",
+        "text": "The entry stays in the PEL and can be reclaimed by another consumer via XCLAIM/XAUTOCLAIM"
+      },
+      {
+        "id": "c",
+        "text": "The whole stream is rolled back"
+      },
+      {
+        "id": "d",
+        "text": "The entry is delivered to every other consumer immediately"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "messaging-and-streams-q11",
+    "topic": "messaging-and-streams",
+    "lesson": "capped-streams-xtrim",
+    "type": "fill-blank",
+    "prompt": "The command a consumer runs to acknowledge that it finished processing a stream entry is ______. (one word)",
+    "explanation": "XACK marks an entry as processed and removes it from the group's Pending Entries List.",
+    "answer": [
+      "XACK",
+      "xack"
+    ]
+  },
+  {
+    "id": "messaging-and-streams-q12",
+    "topic": "messaging-and-streams",
+    "lesson": "stream-data-type-and-append-log",
+    "type": "single-choice",
+    "prompt": "How do you keep a busy stream from consuming memory without bound?",
+    "explanation": "Streams persist, so you must bound them explicitly with MAXLEN (the ~ makes trimming approximate and cheaper) or XTRIM. XACK only clears the PEL, not the log.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It trims itself automatically"
+      },
+      {
+        "id": "b",
+        "text": "Cap it with MAXLEN on XADD (e.g. MAXLEN ~ 10000) or trim with XTRIM"
+      },
+      {
+        "id": "c",
+        "text": "Call XACK on every entry"
+      },
+      {
+        "id": "d",
+        "text": "Streams never use memory"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q01",
+    "topic": "transactions-and-scripting",
+    "lesson": "transactions-multi-and-exec",
+    "type": "single-choice",
+    "prompt": "What does MULTI/EXEC guarantee about the queued commands?",
+    "explanation": "EXEC runs the queued commands one after another with no interleaving from other clients — isolation. It does not provide rollback.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They roll back entirely if any command fails"
+      },
+      {
+        "id": "b",
+        "text": "They run as one unit with no other client's commands interleaving"
+      },
+      {
+        "id": "c",
+        "text": "They run in parallel across threads"
+      },
+      {
+        "id": "d",
+        "text": "They are retried automatically on failure"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q02",
+    "topic": "transactions-and-scripting",
+    "lesson": "no-rollback-in-redis-transactions",
+    "type": "single-choice",
+    "prompt": "During EXEC, one queued command errors because it targets the wrong type. What happens to the other commands?",
+    "explanation": "A run-time error in one command does not undo the others; Redis transactions have no rollback. Only a queuing-time error (before EXEC) aborts the whole transaction.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They are all rolled back"
+      },
+      {
+        "id": "b",
+        "text": "They still execute — Redis has no rollback"
+      },
+      {
+        "id": "c",
+        "text": "EXEC refuses to run any command"
+      },
+      {
+        "id": "d",
+        "text": "They are queued again for a retry"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q03",
+    "topic": "transactions-and-scripting",
+    "lesson": "optimistic-locking-with-watch",
+    "type": "multiple-choice",
+    "prompt": "Which statements about WATCH are true? Select all that apply.",
+    "explanation": "WATCH is optimistic (no lock is held); it aborts EXEC with (nil) if a watched key changed, signaling a retry. It does NOT take an exclusive lock.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It provides optimistic locking (check-and-set)"
+      },
+      {
+        "id": "b",
+        "text": "If a watched key changes before EXEC, EXEC returns (nil)"
+      },
+      {
+        "id": "c",
+        "text": "It holds an exclusive lock on the key until EXEC"
+      },
+      {
+        "id": "d",
+        "text": "A (nil) result from EXEC means you should retry"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "transactions-and-scripting-q04",
+    "topic": "transactions-and-scripting",
+    "lesson": "discard-and-transaction-lifecycle",
+    "type": "single-choice",
+    "prompt": "Why can't you read a value inside MULTI and branch on it before EXEC?",
+    "explanation": "Commands between MULTI and EXEC are only queued (they reply QUEUED), so their results aren't available to branch on. Use WATCH for check-and-set, or a Lua script to compute before writing.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Reads are forbidden inside transactions"
+      },
+      {
+        "id": "b",
+        "text": "Queued commands don't return their values until EXEC runs them"
+      },
+      {
+        "id": "c",
+        "text": "MULTI encrypts all replies"
+      },
+      {
+        "id": "d",
+        "text": "Branching requires Redis Cluster"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q05",
+    "topic": "transactions-and-scripting",
+    "lesson": "transactions-multi-and-exec",
+    "type": "fill-blank",
+    "prompt": "The command that abandons a queued transaction without executing anything is ______. (one word)",
+    "explanation": "DISCARD throws away the queued commands and ends the transaction; nothing runs.",
+    "answer": [
+      "DISCARD",
+      "discard"
+    ]
+  },
+  {
+    "id": "transactions-and-scripting-q06",
+    "topic": "transactions-and-scripting",
+    "lesson": "no-rollback-in-redis-transactions",
+    "type": "single-choice",
+    "prompt": "For atomic read-compute-write logic that needs to branch before writing, what is often a better fit than MULTI/EXEC?",
+    "explanation": "A Lua script (or Redis Function) executes atomically as one uninterruptible unit and can read, decide, and write — cleaner than a transaction for conditional logic.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Pipelining"
+      },
+      {
+        "id": "b",
+        "text": "A Lua script or Redis Function (runs atomically and can make decisions)"
+      },
+      {
+        "id": "c",
+        "text": "Running the commands one at a time with no coordination"
+      },
+      {
+        "id": "d",
+        "text": "SUBSCRIBE"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q07",
+    "topic": "transactions-and-scripting",
+    "lesson": "lua-scripting-basics-eval",
+    "type": "single-choice",
+    "prompt": "In `EVAL script numkeys ...`, what does numkeys tell Redis?",
+    "explanation": "numkeys splits the arguments: the first numkeys of them are key names (KEYS[1..]), and the remainder are ARGV. Passing keys explicitly is also what lets Cluster route correctly.",
+    "options": [
+      {
+        "id": "a",
+        "text": "How many times to run the script"
+      },
+      {
+        "id": "b",
+        "text": "How many of the following arguments are keys (populating KEYS), with the rest going to ARGV"
+      },
+      {
+        "id": "c",
+        "text": "The maximum runtime in milliseconds"
+      },
+      {
+        "id": "d",
+        "text": "The number of return values"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q08",
+    "topic": "transactions-and-scripting",
+    "lesson": "keys-vs-argv-in-scripts",
+    "type": "single-choice",
+    "prompt": "Why must Lua scripts be kept short and fast?",
+    "explanation": "A script's atomicity comes from monopolizing the one command thread, so a long-running script freezes every other client until it finishes.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Because Lua is a slow language"
+      },
+      {
+        "id": "b",
+        "text": "Because a script runs atomically on the single command thread, blocking all other clients while it runs"
+      },
+      {
+        "id": "c",
+        "text": "Because scripts can only use 1 KB of memory"
+      },
+      {
+        "id": "d",
+        "text": "Because EVAL charges per second"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q09",
+    "topic": "transactions-and-scripting",
+    "lesson": "atomicity-and-script-caching",
+    "type": "multiple-choice",
+    "prompt": "Which statements are true? Select all that apply.",
+    "explanation": "Scripts are atomic, EVALSHA uses the cached SHA-1, and Functions are persisted/replicated. EVAL scripts are only an ephemeral cache — they are NOT stored with the dataset.",
+    "options": [
+      {
+        "id": "a",
+        "text": "A Lua script executes atomically — no other command interleaves"
+      },
+      {
+        "id": "b",
+        "text": "EVALSHA runs a script cached by its SHA-1 hash"
+      },
+      {
+        "id": "c",
+        "text": "Redis Functions are persisted with the dataset and replicated"
+      },
+      {
+        "id": "d",
+        "text": "EVAL scripts are permanently stored in RDB/AOF like data"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "transactions-and-scripting-q10",
+    "topic": "transactions-and-scripting",
+    "lesson": "redis-functions-architecture",
+    "type": "single-choice",
+    "prompt": "What is a key advantage of Redis Functions over EVAL scripts?",
+    "explanation": "Functions (Redis 7.0+) are first-class: named, managed as a library, and stored with the dataset (RDB/AOF) and replicated — unlike the ephemeral script cache behind EVAL.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They run faster because they skip atomicity"
+      },
+      {
+        "id": "b",
+        "text": "They are named, loaded as a library, and persisted/replicated with the data"
+      },
+      {
+        "id": "c",
+        "text": "They can block the server without consequences"
+      },
+      {
+        "id": "d",
+        "text": "They do not need keys or arguments"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "transactions-and-scripting-q11",
+    "topic": "transactions-and-scripting",
+    "lesson": "lua-scripting-basics-eval",
+    "type": "fill-blank",
+    "prompt": "Inside a Lua script, you invoke a Redis command with redis.____('SET', KEYS[1], ARGV[1]). (the function name that raises on error)",
+    "explanation": "redis.call runs a command and raises an error (aborting the script) if it fails; redis.pcall instead returns the error as a value.",
+    "answer": [
+      "call",
+      "CALL"
+    ]
+  },
+  {
+    "id": "transactions-and-scripting-q12",
+    "topic": "transactions-and-scripting",
+    "lesson": "keys-vs-argv-in-scripts",
+    "type": "single-choice",
+    "prompt": "Why should a script receive the keys it touches through KEYS rather than hard-coding them?",
+    "explanation": "Declaring keys via KEYS lets Redis (and Cluster) know which keys the script operates on, which is necessary to route the command to the right shard.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It makes the script run twice as fast"
+      },
+      {
+        "id": "b",
+        "text": "So Redis knows which keys are accessed, which is required for correct routing in Redis Cluster"
+      },
+      {
+        "id": "c",
+        "text": "Hard-coded keys are not allowed in Lua"
+      },
+      {
+        "id": "d",
+        "text": "It reduces the SHA-1 length"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "persistence-and-durability-q01",
+    "topic": "persistence-and-durability",
+    "lesson": "persistence-overview-in-memory",
+    "type": "single-choice",
+    "prompt": "What is the main risk of RDB (snapshot) persistence?",
+    "explanation": "RDB captures the dataset at points in time; between snapshots, recent writes exist only in memory and are lost if Redis crashes.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It makes restarts extremely slow"
+      },
+      {
+        "id": "b",
+        "text": "On a crash you lose everything written since the last snapshot"
+      },
+      {
+        "id": "c",
+        "text": "It cannot be used for backups"
+      },
+      {
+        "id": "d",
+        "text": "It logs every command, so files grow forever"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "persistence-and-durability-q02",
+    "topic": "persistence-and-durability",
+    "lesson": "rdb-snapshots-save-bgsave",
+    "type": "single-choice",
+    "prompt": "What is the default appendfsync policy, and roughly how much data can it lose?",
+    "explanation": "The default appendfsync is everysec: it flushes to disk about once per second, so a crash risks roughly the last second of writes — a balance of durability and speed.",
+    "options": [
+      {
+        "id": "a",
+        "text": "always — essentially no loss"
+      },
+      {
+        "id": "b",
+        "text": "everysec — up to about one second"
+      },
+      {
+        "id": "c",
+        "text": "no — potentially many seconds"
+      },
+      {
+        "id": "d",
+        "text": "AOF has no fsync policy"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "persistence-and-durability-q03",
+    "topic": "persistence-and-durability",
+    "lesson": "aof-append-only-file-fsync",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Redis persistence are true? Select all that apply.",
+    "explanation": "BGSAVE is a background fork, AOF replays commands, and both can be enabled together. AOF restarts are usually SLOWER than RDB because it replays commands rather than loading a snapshot.",
+    "options": [
+      {
+        "id": "a",
+        "text": "BGSAVE forks a background process so the server keeps serving during the snapshot"
+      },
+      {
+        "id": "b",
+        "text": "AOF replays logged write commands on restart to rebuild the data"
+      },
+      {
+        "id": "c",
+        "text": "You can enable both RDB and AOF at the same time"
+      },
+      {
+        "id": "d",
+        "text": "AOF always restarts faster than RDB"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "persistence-and-durability-q04",
+    "topic": "persistence-and-durability",
+    "lesson": "aof-rewrite-compaction",
+    "type": "single-choice",
+    "prompt": "Which option gives effectively zero data loss on a crash (at the cost of speed)?",
+    "explanation": "appendfsync always flushes every write to disk before acknowledging, giving near-zero loss — but every write waits on disk, so it's the slowest option.",
+    "options": [
+      {
+        "id": "a",
+        "text": "RDB with frequent save rules"
+      },
+      {
+        "id": "b",
+        "text": "AOF with appendfsync always"
+      },
+      {
+        "id": "c",
+        "text": "AOF with appendfsync no"
+      },
+      {
+        "id": "d",
+        "text": "No persistence"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "persistence-and-durability-q05",
+    "topic": "persistence-and-durability",
+    "lesson": "combining-rdb-and-aof",
+    "type": "fill-blank",
+    "prompt": "The command that snapshots the dataset in the background by forking a child process is ______. (one word)",
+    "explanation": "BGSAVE forks a child that writes the RDB file while the main process keeps serving clients, unlike the blocking SAVE.",
+    "answer": [
+      "BGSAVE",
+      "bgsave"
+    ]
+  },
+  {
+    "id": "persistence-and-durability-q06",
+    "topic": "persistence-and-durability",
+    "lesson": "rdb-and-aof-disaster-recovery",
+    "type": "single-choice",
+    "prompt": "Why is the AOF periodically rewritten?",
+    "explanation": "Appending every write makes the AOF grow unbounded; BGREWRITEAOF rewrites it into the smallest set of commands that reproduce the current dataset.",
+    "options": [
+      {
+        "id": "a",
+        "text": "To encrypt it"
+      },
+      {
+        "id": "b",
+        "text": "Because it only grows as commands are appended; a rewrite compacts it to the minimal commands that recreate current data"
+      },
+      {
+        "id": "c",
+        "text": "To convert it into an RDB snapshot permanently"
+      },
+      {
+        "id": "d",
+        "text": "To change the fsync policy"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q07",
+    "topic": "expiration-and-memory",
+    "lesson": "configuring-maxmemory",
+    "type": "single-choice",
+    "prompt": "What is the default maxmemory-policy, and what does it do when memory is full?",
+    "explanation": "The default is noeviction: Redis would rather reject writes than delete data. That's safe for a datastore but usually wrong for a cache.",
+    "options": [
+      {
+        "id": "a",
+        "text": "allkeys-lru — it evicts the least-recently-used key"
+      },
+      {
+        "id": "b",
+        "text": "noeviction — it rejects new writes with an OOM error (reads still work)"
+      },
+      {
+        "id": "c",
+        "text": "volatile-ttl — it evicts the soonest-to-expire key"
+      },
+      {
+        "id": "d",
+        "text": "allkeys-random — it evicts a random key"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q08",
+    "topic": "expiration-and-memory",
+    "lesson": "eviction-policies-overview",
+    "type": "single-choice",
+    "prompt": "How do allkeys-* policies differ from volatile-* policies?",
+    "explanation": "allkeys-* consider the whole keyspace; volatile-* consider only keys with a TTL set (and fall back to noeviction behavior if none are eligible).",
+    "options": [
+      {
+        "id": "a",
+        "text": "allkeys-* only evict keys with a TTL; volatile-* evict any key"
+      },
+      {
+        "id": "b",
+        "text": "allkeys-* can evict any key; volatile-* only evict keys that have a TTL"
+      },
+      {
+        "id": "c",
+        "text": "They are identical"
+      },
+      {
+        "id": "d",
+        "text": "volatile-* never evict anything"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q09",
+    "topic": "expiration-and-memory",
+    "lesson": "lru-vs-lfu-sampling-algorithms",
+    "type": "multiple-choice",
+    "prompt": "Which statements are true? Select all that apply.",
+    "explanation": "maxmemory 0 is unlimited, LRU/LFU are sampled approximations, and allkeys-* eviction can remove TTL-less keys. Eviction (memory pressure) is DISTINCT from expiration (per-key TTL).",
+    "options": [
+      {
+        "id": "a",
+        "text": "maxmemory 0 means no limit"
+      },
+      {
+        "id": "b",
+        "text": "LRU and LFU are approximated by sampling, not tracked exactly"
+      },
+      {
+        "id": "c",
+        "text": "Eviction can remove keys that have no TTL (under an allkeys-* policy)"
+      },
+      {
+        "id": "d",
+        "text": "Eviction and expiration are the same mechanism"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "expiration-and-memory-q10",
+    "topic": "expiration-and-memory",
+    "lesson": "memory-diagnostics-and-usage",
+    "type": "single-choice",
+    "prompt": "You set maxmemory-policy volatile-lru but never set TTLs on your keys. What happens when memory fills up?",
+    "explanation": "volatile-* policies only evict keys that have a TTL. With no TTL'd keys, there's nothing to evict, so writes start failing with OOM — like noeviction.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Redis evicts random keys anyway"
+      },
+      {
+        "id": "b",
+        "text": "Redis has no eligible keys to evict, so it behaves like noeviction and rejects writes"
+      },
+      {
+        "id": "c",
+        "text": "Redis automatically adds TTLs to all keys"
+      },
+      {
+        "id": "d",
+        "text": "Redis doubles its memory limit"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "expiration-and-memory-q11",
+    "topic": "expiration-and-memory",
+    "lesson": "configuring-maxmemory",
+    "type": "fill-blank",
+    "prompt": "The configuration directive that sets the maximum memory Redis uses for data is ______. (one word)",
+    "explanation": "maxmemory sets the ceiling (e.g. maxmemory 512mb); 0 means unlimited.",
+    "answer": [
+      "maxmemory"
+    ]
+  },
+  {
+    "id": "expiration-and-memory-q12",
+    "topic": "expiration-and-memory",
+    "lesson": "eviction-policies-overview",
+    "type": "single-choice",
+    "prompt": "Why are Redis's LRU and LFU described as approximate?",
+    "explanation": "Tracking perfect LRU/LFU for every key would cost too much, so Redis samples a small set (maxmemory-samples) and evicts the best candidate — a close approximation you can tune.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They guess randomly"
+      },
+      {
+        "id": "b",
+        "text": "Redis samples a few keys and evicts the best candidate rather than tracking exact usage order for every key"
+      },
+      {
+        "id": "c",
+        "text": "They only work in Redis Cluster"
+      },
+      {
+        "id": "d",
+        "text": "They ignore access patterns entirely"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "caching-patterns-q01",
+    "topic": "caching-patterns",
+    "lesson": "cache-aside-pattern",
+    "type": "single-choice",
+    "prompt": "In the cache-aside pattern, what happens on a cache miss?",
+    "explanation": "Cache-aside is application-managed: on a miss the app fetches from the source, populates Redis (usually with a TTL), and returns the value.",
+    "options": [
+      {
+        "id": "a",
+        "text": "The request fails and returns an error"
+      },
+      {
+        "id": "b",
+        "text": "The app loads from the database, stores it in Redis with a TTL, and returns it"
+      },
+      {
+        "id": "c",
+        "text": "Redis loads it from the database automatically"
+      },
+      {
+        "id": "d",
+        "text": "The value is written to the database only"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "caching-patterns-q02",
+    "topic": "caching-patterns",
+    "lesson": "write-through-and-write-behind",
+    "type": "single-choice",
+    "prompt": "What is the key risk of the write-behind (write-back) pattern?",
+    "explanation": "Write-behind acknowledges writes at the cache and flushes to the database asynchronously, so a crash before the flush loses those buffered writes.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Writes are extremely slow"
+      },
+      {
+        "id": "b",
+        "text": "Data buffered in the cache can be lost if Redis crashes before flushing to the database"
+      },
+      {
+        "id": "c",
+        "text": "Reads always miss"
+      },
+      {
+        "id": "d",
+        "text": "It cannot use TTLs"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "caching-patterns-q03",
+    "topic": "caching-patterns",
+    "lesson": "cache-stampede-and-mutex-locks",
+    "type": "multiple-choice",
+    "prompt": "Which techniques help prevent a cache stampede? Select all that apply.",
+    "explanation": "Jitter, a recompute lock, and early refresh all reduce stampedes. Removing TTLs entirely causes permanent staleness and doesn't solve the herd — it's not a fix.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Adding random jitter to TTLs so keys don't all expire at once"
+      },
+      {
+        "id": "b",
+        "text": "A recompute lock so only one request rebuilds a missed key"
+      },
+      {
+        "id": "c",
+        "text": "Refreshing hot keys early, before they expire"
+      },
+      {
+        "id": "d",
+        "text": "Removing all TTLs so keys never expire"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "caching-patterns-q04",
+    "topic": "caching-patterns",
+    "lesson": "cache-invalidation-strategies",
+    "type": "single-choice",
+    "prompt": "Why keep a TTL on cache entries even if you invalidate them on writes?",
+    "explanation": "A TTL is a safety net: even if a delete/update-on-write is lost, the entry eventually expires, so staleness can't persist indefinitely.",
+    "options": [
+      {
+        "id": "a",
+        "text": "TTLs make writes faster"
+      },
+      {
+        "id": "b",
+        "text": "If an invalidation is ever missed, the stale entry still expires on its own — mistakes self-heal"
+      },
+      {
+        "id": "c",
+        "text": "Redis requires a TTL on every key"
+      },
+      {
+        "id": "d",
+        "text": "TTLs prevent cache hits"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "caching-patterns-q05",
+    "topic": "caching-patterns",
+    "lesson": "client-side-caching-tracking",
+    "type": "fill-blank",
+    "prompt": "The pattern where the application checks the cache and, on a miss, loads from the database and populates the cache is called cache-______. (one word)",
+    "explanation": "Cache-aside (also called lazy loading) is the most common caching pattern, managed by the application.",
+    "answer": [
+      "aside"
+    ]
+  },
+  {
+    "id": "caching-patterns-q06",
+    "topic": "caching-patterns",
+    "lesson": "ttl-jitter-and-cache-penetration",
+    "type": "single-choice",
+    "prompt": "What does server-assisted client-side caching (CLIENT TRACKING) provide?",
+    "explanation": "With CLIENT TRACKING, clients keep local copies of fetched keys and Redis notifies them to invalidate a copy when the key changes — near-zero-latency reads that stay reasonably fresh.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It disables the Redis cache entirely"
+      },
+      {
+        "id": "b",
+        "text": "Clients cache keys locally, and Redis sends invalidation messages when those keys change"
+      },
+      {
+        "id": "c",
+        "text": "It forces all reads to go to the database"
+      },
+      {
+        "id": "d",
+        "text": "It makes Pub/Sub durable"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q01",
+    "topic": "security-and-operations",
+    "lesson": "pipelining-rtt-reduction",
+    "type": "single-choice",
+    "prompt": "What does pipelining primarily reduce?",
+    "explanation": "Pipelining amortizes round-trip time: you send a batch of commands back-to-back and read all the replies together, paying the RTT roughly once instead of once per command.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Memory usage"
+      },
+      {
+        "id": "b",
+        "text": "Round-trip network latency, by sending many commands without waiting for each reply"
+      },
+      {
+        "id": "c",
+        "text": "The number of keys stored"
+      },
+      {
+        "id": "d",
+        "text": "Disk writes"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q02",
+    "topic": "security-and-operations",
+    "lesson": "threading-architecture-io-threads",
+    "type": "single-choice",
+    "prompt": "Does pipelining make the batched commands atomic?",
+    "explanation": "Pipelining is purely a latency optimization with no atomicity. For atomic execution you need MULTI/EXEC or a Lua script.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Yes, exactly like MULTI/EXEC"
+      },
+      {
+        "id": "b",
+        "text": "No — it only removes waiting; other clients' commands can still interleave"
+      },
+      {
+        "id": "c",
+        "text": "Yes, but only for writes"
+      },
+      {
+        "id": "d",
+        "text": "Only in Redis Cluster"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q03",
+    "topic": "security-and-operations",
+    "lesson": "identifying-slow-queries-slowlog",
+    "type": "multiple-choice",
+    "prompt": "Which are O(N) traps that can block the single command thread? Select all that apply.",
+    "explanation": "KEYS, big HGETALL, and full LRANGE are all O(N) and stall the server. A single GET is O(1) and fine.",
+    "options": [
+      {
+        "id": "a",
+        "text": "KEYS * on a large keyspace"
+      },
+      {
+        "id": "b",
+        "text": "HGETALL on a hash with millions of fields"
+      },
+      {
+        "id": "c",
+        "text": "LRANGE key 0 -1 on a huge list"
+      },
+      {
+        "id": "d",
+        "text": "GET on a single small string"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "security-and-operations-q04",
+    "topic": "security-and-operations",
+    "lesson": "pipelining-rtt-reduction",
+    "type": "single-choice",
+    "prompt": "In Redis 6+, what do I/O threads speed up?",
+    "explanation": "I/O threads parallelize moving bytes on the network; command execution stays single-threaded, so they won't speed up an expensive command.",
+    "options": [
+      {
+        "id": "a",
+        "text": "The execution of each command's logic"
+      },
+      {
+        "id": "b",
+        "text": "Reading and writing data on the network sockets (not command execution)"
+      },
+      {
+        "id": "c",
+        "text": "Disk persistence only"
+      },
+      {
+        "id": "d",
+        "text": "Nothing — they are disabled permanently"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q05",
+    "topic": "security-and-operations",
+    "lesson": "threading-architecture-io-threads",
+    "type": "fill-blank",
+    "prompt": "The command that lists recent commands which exceeded a time threshold is ______. (one word)",
+    "explanation": "SLOWLOG records commands slower than slowlog-log-slower-than microseconds; SLOWLOG GET shows them.",
+    "answer": [
+      "SLOWLOG",
+      "slowlog"
+    ]
+  },
+  {
+    "id": "security-and-operations-q06",
+    "topic": "security-and-operations",
+    "lesson": "identifying-slow-queries-slowlog",
+    "type": "single-choice",
+    "prompt": "What should you use instead of DEL to remove a very large key without blocking?",
+    "explanation": "UNLINK removes the key immediately but reclaims its (potentially large) memory asynchronously, avoiding the blocking cost that DEL would pay freeing a huge value.",
+    "options": [
+      {
+        "id": "a",
+        "text": "UNLINK, which frees the memory in the background"
+      },
+      {
+        "id": "b",
+        "text": "FLUSHALL"
+      },
+      {
+        "id": "c",
+        "text": "EXPIRE with a 0 TTL"
+      },
+      {
+        "id": "d",
+        "text": "KEYS"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "scaling-and-clustering-q01",
+    "topic": "scaling-and-clustering",
+    "lesson": "replication-architecture-primary-replica",
+    "type": "single-choice",
+    "prompt": "By default, when does a primary acknowledge a write to the client?",
+    "explanation": "Replication is asynchronous: the primary acks locally and streams to replicas in the background, which is why a failover can lose recently acked writes.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Only after all replicas confirm they received it"
+      },
+      {
+        "id": "b",
+        "text": "As soon as it applies the write locally, without waiting for replicas (asynchronous)"
+      },
+      {
+        "id": "c",
+        "text": "After the write is flushed to disk on every replica"
+      },
+      {
+        "id": "d",
+        "text": "Only after a majority of replicas vote"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q02",
+    "topic": "scaling-and-clustering",
+    "lesson": "full-vs-partial-resynchronization",
+    "type": "single-choice",
+    "prompt": "Why can a failover lose recently acknowledged writes?",
+    "explanation": "With async replication, an ack doesn't mean a replica has the write. If the primary dies before replicating and a behind replica is promoted, those writes are gone.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Replicas delete data on promotion"
+      },
+      {
+        "id": "b",
+        "text": "Writes acked by the primary may not have reached a replica before the primary crashed"
+      },
+      {
+        "id": "c",
+        "text": "Redis never replicates writes"
+      },
+      {
+        "id": "d",
+        "text": "The client cancels the writes"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q03",
+    "topic": "scaling-and-clustering",
+    "lesson": "asynchronous-replication-tradeoffs",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Redis replication are true? Select all that apply.",
+    "explanation": "Replicas are read-only, partial resync uses the backlog + offset, and replica reads can lag. Replication is NOT strongly consistent.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Replicas are read-only by default"
+      },
+      {
+        "id": "b",
+        "text": "A partial resync sends only the writes missed since the replica's offset"
+      },
+      {
+        "id": "c",
+        "text": "Reads from a replica can be stale due to lag"
+      },
+      {
+        "id": "d",
+        "text": "Replication makes Redis strongly consistent"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "scaling-and-clustering-q04",
+    "topic": "scaling-and-clustering",
+    "lesson": "wait-command-and-scaling-reads",
+    "type": "single-choice",
+    "prompt": "What does WAIT numreplicas timeout do?",
+    "explanation": "WAIT blocks until N replicas ack the writes so far, shrinking the loss window — but it does not guarantee disk durability or full consistency.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Blocks until at least that many replicas acknowledge your writes (or the timeout elapses)"
+      },
+      {
+        "id": "b",
+        "text": "Guarantees the writes are on disk everywhere"
+      },
+      {
+        "id": "c",
+        "text": "Makes all future replication synchronous permanently"
+      },
+      {
+        "id": "d",
+        "text": "Deletes lagging replicas"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "scaling-and-clustering-q05",
+    "topic": "scaling-and-clustering",
+    "lesson": "replication-architecture-primary-replica",
+    "type": "fill-blank",
+    "prompt": "The command that makes an instance replicate a given primary is ______ host port. (one word)",
+    "explanation": "REPLICAOF host port turns an instance into a replica of that primary; REPLICAOF NO ONE promotes it back to a primary.",
+    "answer": [
+      "REPLICAOF",
+      "replicaof"
+    ]
+  },
+  {
+    "id": "scaling-and-clustering-q06",
+    "topic": "scaling-and-clustering",
+    "lesson": "full-vs-partial-resynchronization",
+    "type": "single-choice",
+    "prompt": "When is it risky to read your own just-written value from a replica?",
+    "explanation": "Because replication is asynchronous, a replica may not yet have your latest write. If you must see your own write immediately, read from the primary.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Never — replicas are always perfectly in sync"
+      },
+      {
+        "id": "b",
+        "text": "When you need read-after-write, because replica lag means the write may not have arrived yet"
+      },
+      {
+        "id": "c",
+        "text": "Only when the replica is also a primary"
+      },
+      {
+        "id": "d",
+        "text": "Only in Redis Cluster"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q07",
+    "topic": "scaling-and-clustering",
+    "lesson": "sentinel-architecture-and-quorum",
+    "type": "single-choice",
+    "prompt": "What is the primary purpose of Redis Sentinel?",
+    "explanation": "Sentinel monitors a primary/replica deployment and, on failure, promotes a replica and redirects clients — high availability, not sharding.",
+    "options": [
+      {
+        "id": "a",
+        "text": "To shard data across many primaries"
+      },
+      {
+        "id": "b",
+        "text": "To provide high availability for a primary/replica setup via monitoring and automatic failover"
+      },
+      {
+        "id": "c",
+        "text": "To compress data in memory"
+      },
+      {
+        "id": "d",
+        "text": "To encrypt client connections"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q08",
+    "topic": "scaling-and-clustering",
+    "lesson": "automatic-failover-workflow",
+    "type": "single-choice",
+    "prompt": "What does the quorum configure?",
+    "explanation": "The quorum is the number of Sentinels that must agree the primary is objectively down (ODOWN) to trigger a failover.",
+    "options": [
+      {
+        "id": "a",
+        "text": "How many keys can be stored"
+      },
+      {
+        "id": "b",
+        "text": "How many Sentinels must agree the primary is down (ODOWN) before failover"
+      },
+      {
+        "id": "c",
+        "text": "The number of replicas allowed"
+      },
+      {
+        "id": "d",
+        "text": "The TCP port Sentinel uses"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q09",
+    "topic": "scaling-and-clustering",
+    "lesson": "sentinel-configuration-and-split-brain",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Sentinel are true? Select all that apply.",
+    "explanation": "Odd number ≥3, service discovery, and the SDOWN→ODOWN progression are all correct. Sentinel does NOT shard data — that's Cluster.",
+    "options": [
+      {
+        "id": "a",
+        "text": "You should run an odd number of Sentinels, at least three, on separate hosts"
+      },
+      {
+        "id": "b",
+        "text": "Clients can ask Sentinel for the current primary's address (service discovery)"
+      },
+      {
+        "id": "c",
+        "text": "SDOWN is one Sentinel's view; ODOWN requires the quorum to agree"
+      },
+      {
+        "id": "d",
+        "text": "Sentinel shards the keyspace across nodes"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "scaling-and-clustering-q10",
+    "topic": "scaling-and-clustering",
+    "lesson": "client-sentinel-service-discovery",
+    "type": "single-choice",
+    "prompt": "How does Sentinel differ from Redis Cluster?",
+    "explanation": "Sentinel keeps one primary available (no sharding); Cluster splits data across 16384 slots on multiple primaries with built-in failover.",
+    "options": [
+      {
+        "id": "a",
+        "text": "They are identical"
+      },
+      {
+        "id": "b",
+        "text": "Sentinel provides HA for a single non-sharded primary; Cluster shards data across many primaries and also handles failover"
+      },
+      {
+        "id": "c",
+        "text": "Cluster cannot fail over; Sentinel can"
+      },
+      {
+        "id": "d",
+        "text": "Sentinel stores more data per node"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q11",
+    "topic": "scaling-and-clustering",
+    "lesson": "sentinel-architecture-and-quorum",
+    "type": "fill-blank",
+    "prompt": "When enough Sentinels agree the primary is down, it is declared ______ Down (objectively). (one word for the O)",
+    "explanation": "ODOWN (Objectively Down) is reached when the quorum of Sentinels agrees the primary is unreachable — the trigger for failover.",
+    "answer": [
+      "Objectively",
+      "objectively",
+      "ODOWN",
+      "odown"
+    ]
+  },
+  {
+    "id": "scaling-and-clustering-q12",
+    "topic": "scaling-and-clustering",
+    "lesson": "automatic-failover-workflow",
+    "type": "single-choice",
+    "prompt": "Why is running only two Sentinels risky?",
+    "explanation": "A failover requires a majority of Sentinels to agree. With only two, losing one (or a partition) prevents forming a majority, stalling recovery — so run an odd number, at least three.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Two Sentinels use too much memory"
+      },
+      {
+        "id": "b",
+        "text": "Authorizing a failover needs a majority of Sentinels, and a single failure or partition can break a two-node majority"
+      },
+      {
+        "id": "c",
+        "text": "Sentinel requires exactly one instance"
+      },
+      {
+        "id": "d",
+        "text": "Two Sentinels cannot monitor replicas"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q13",
+    "topic": "scaling-and-clustering",
+    "lesson": "redis-cluster-sharding-hash-slots",
+    "type": "single-choice",
+    "prompt": "How does Redis Cluster decide which node holds a key?",
+    "explanation": "Cluster uses 16384 fixed hash slots; a key's slot is CRC16(key) mod 16384, and each primary owns a subset of slots. This is fixed-slot sharding, not consistent hashing.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Consistent hashing over a ring"
+      },
+      {
+        "id": "b",
+        "text": "The key maps to one of 16384 hash slots via CRC16(key) mod 16384, and each primary owns a range of slots"
+      },
+      {
+        "id": "c",
+        "text": "A random node is chosen per key"
+      },
+      {
+        "id": "d",
+        "text": "The client always uses node 0"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q14",
+    "topic": "scaling-and-clustering",
+    "lesson": "hash-tags-multi-key-operations",
+    "type": "single-choice",
+    "prompt": "What does a MOVED redirect indicate?",
+    "explanation": "MOVED means the slot now lives on the named node (a stable relocation). ASK, by contrast, is the temporary during-migration redirect.",
+    "options": [
+      {
+        "id": "a",
+        "text": "The slot has permanently relocated to another node; update your map and retry there"
+      },
+      {
+        "id": "b",
+        "text": "The key was deleted"
+      },
+      {
+        "id": "c",
+        "text": "The cluster is read-only"
+      },
+      {
+        "id": "d",
+        "text": "A temporary hint for one request during migration"
+      }
+    ],
+    "answer": "a"
+  },
+  {
+    "id": "scaling-and-clustering-q15",
+    "topic": "scaling-and-clustering",
+    "lesson": "cluster-redirects-moved-and-ask",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Redis Cluster are true? Select all that apply.",
+    "explanation": "Multi-key ops need same-slot keys (hash tags help), and Cluster is async/not strongly consistent. Cluster uses only database 0 — SELECT for multiple DBs is not available.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Multi-key commands require all keys to be in the same slot"
+      },
+      {
+        "id": "b",
+        "text": "Hash tags {...} force keys to hash to the same slot"
+      },
+      {
+        "id": "c",
+        "text": "Cluster supports the multiple-database SELECT feature"
+      },
+      {
+        "id": "d",
+        "text": "Cluster is not strongly consistent"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ]
+  },
+  {
+    "id": "scaling-and-clustering-q16",
+    "topic": "scaling-and-clustering",
+    "lesson": "cluster-failover-and-limitations",
+    "type": "single-choice",
+    "prompt": "Why does `MGET user:1:name user:1:age` sometimes return a CROSSSLOT error in a cluster?",
+    "explanation": "A multi-key command needs all keys in one slot. Without a hash tag the two keys can land in different slots, producing CROSSSLOT. Using {user:1} in both key names co-locates them.",
+    "options": [
+      {
+        "id": "a",
+        "text": "MGET is not allowed in clusters at all"
+      },
+      {
+        "id": "b",
+        "text": "The two keys may hash to different slots, so no single node can serve them together"
+      },
+      {
+        "id": "c",
+        "text": "The keys are too large"
+      },
+      {
+        "id": "d",
+        "text": "The cluster is out of memory"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "scaling-and-clustering-q17",
+    "topic": "scaling-and-clustering",
+    "lesson": "redis-cluster-sharding-hash-slots",
+    "type": "fill-blank",
+    "prompt": "To force related keys into the same slot, wrap a shared substring of the key name in ______ (the two characters that delimit a hash tag).",
+    "explanation": "A hash tag is a substring inside { } — only that part is hashed, so {user:42}:name and {user:42}:cart share a slot.",
+    "answer": [
+      "{}",
+      "curly braces",
+      "braces"
+    ]
+  },
+  {
+    "id": "scaling-and-clustering-q18",
+    "topic": "scaling-and-clustering",
+    "lesson": "hash-tags-multi-key-operations",
+    "type": "single-choice",
+    "prompt": "When is Redis Cluster the right choice over Sentinel?",
+    "explanation": "Cluster's job is horizontal sharding across nodes. If data fits one node, Sentinel is simpler; Cluster neither adds strong consistency nor multiple databases.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Whenever you want any failover at all"
+      },
+      {
+        "id": "b",
+        "text": "When your data or write throughput exceeds a single node and you need to shard"
+      },
+      {
+        "id": "c",
+        "text": "When you need multiple logical databases"
+      },
+      {
+        "id": "d",
+        "text": "When you need strong consistency"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q07",
+    "topic": "security-and-operations",
+    "lesson": "network-binding-and-protected-mode",
+    "type": "single-choice",
+    "prompt": "What is the most important rule of Redis security?",
+    "explanation": "Redis is designed for a trusted network. An internet-reachable Redis is a classic, heavily-exploited misconfiguration — keep it private and firewalled.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Always enable RDB persistence"
+      },
+      {
+        "id": "b",
+        "text": "Never expose Redis directly to the internet; run it on a trusted private network"
+      },
+      {
+        "id": "c",
+        "text": "Use only database 0"
+      },
+      {
+        "id": "d",
+        "text": "Disable replication"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q08",
+    "topic": "security-and-operations",
+    "lesson": "authentication-with-requirepass",
+    "type": "single-choice",
+    "prompt": "What does protected mode do?",
+    "explanation": "Protected mode is a safety net: with no auth configured and external interfaces bound, it blocks connections from other hosts. It is not a replacement for real authentication.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Encrypts all traffic automatically"
+      },
+      {
+        "id": "b",
+        "text": "Refuses external connections when Redis has no password/ACL configured and is listening on non-loopback interfaces"
+      },
+      {
+        "id": "c",
+        "text": "Makes all keys read-only"
+      },
+      {
+        "id": "d",
+        "text": "Requires TLS for every client"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q09",
+    "topic": "security-and-operations",
+    "lesson": "access-control-lists-acl",
+    "type": "multiple-choice",
+    "prompt": "Which statements about Redis authentication and hardening are true? Select all that apply.",
+    "explanation": "ACLs, requirepass, and rename-command are all real controls. Redis traffic is NOT encrypted by default — you must enable TLS.",
+    "options": [
+      {
+        "id": "a",
+        "text": "ACLs let you create users with fine-grained command, key, and channel permissions"
+      },
+      {
+        "id": "b",
+        "text": "requirepass sets a password for the default user"
+      },
+      {
+        "id": "c",
+        "text": "You can disable a command by renaming it to an empty string with rename-command"
+      },
+      {
+        "id": "d",
+        "text": "Redis traffic is encrypted by default"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "security-and-operations-q10",
+    "topic": "security-and-operations",
+    "lesson": "encrypting-traffic-with-tls",
+    "type": "single-choice",
+    "prompt": "Why give a read-only reporting service its own ACL user scoped to specific keys?",
+    "explanation": "Scoping a user to exactly what it needs limits the blast radius if the service is compromised — the essence of least privilege.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It makes queries run faster"
+      },
+      {
+        "id": "b",
+        "text": "Least privilege — a compromise of that service can't write, delete, or read keys outside its scope"
+      },
+      {
+        "id": "c",
+        "text": "ACL users bypass authentication"
+      },
+      {
+        "id": "d",
+        "text": "It enables multiple databases"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q11",
+    "topic": "security-and-operations",
+    "lesson": "renaming-and-disabling-dangerous-commands",
+    "type": "fill-blank",
+    "prompt": "The configuration directive that sets a single password for the default user is ______. (one word)",
+    "explanation": "requirepass sets the default user's password; clients then authenticate with AUTH before running commands.",
+    "answer": [
+      "requirepass"
+    ]
+  },
+  {
+    "id": "security-and-operations-q12",
+    "topic": "security-and-operations",
+    "lesson": "network-binding-and-protected-mode",
+    "type": "single-choice",
+    "prompt": "What does enabling TLS in Redis protect against?",
+    "explanation": "TLS encrypts Redis connections so credentials and data can't be read in transit over an untrusted network.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Running out of memory"
+      },
+      {
+        "id": "b",
+        "text": "Eavesdropping on client/server (and cluster) traffic sent over the network"
+      },
+      {
+        "id": "c",
+        "text": "Slow commands blocking the server"
+      },
+      {
+        "id": "d",
+        "text": "Key expiration"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q13",
+    "topic": "security-and-operations",
+    "lesson": "monitoring-with-info-sections",
+    "type": "single-choice",
+    "prompt": "Which INFO metrics let you compute the cache hit rate?",
+    "explanation": "The hit rate is keyspace_hits / (keyspace_hits + keyspace_misses). A falling hit rate often signals short TTLs, memory pressure, or eviction churn.",
+    "options": [
+      {
+        "id": "a",
+        "text": "used_memory and maxmemory"
+      },
+      {
+        "id": "b",
+        "text": "keyspace_hits and keyspace_misses"
+      },
+      {
+        "id": "c",
+        "text": "connected_clients and blocked_clients"
+      },
+      {
+        "id": "d",
+        "text": "evicted_keys and expired_keys"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q14",
+    "topic": "security-and-operations",
+    "lesson": "production-monitoring-vs-monitor",
+    "type": "single-choice",
+    "prompt": "Why should MONITOR be used only briefly?",
+    "explanation": "MONITOR copies every processed command to your connection — great for short debugging but costly at high throughput, so never leave it running in production.",
+    "options": [
+      {
+        "id": "a",
+        "text": "It deletes keys as it runs"
+      },
+      {
+        "id": "b",
+        "text": "It streams every command the server processes, adding significant overhead that can slow a busy server"
+      },
+      {
+        "id": "c",
+        "text": "It disables persistence"
+      },
+      {
+        "id": "d",
+        "text": "It only works once per day"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q15",
+    "topic": "security-and-operations",
+    "lesson": "keyspace-notifications",
+    "type": "multiple-choice",
+    "prompt": "Which statements about operating Redis are true? Select all that apply.",
+    "explanation": "Evictions signal pressure, keyspace notifications are fire-and-forget, and rolling upgrades go replica-first. MONITOR is NOT for continuous monitoring — use INFO/SLOWLOG.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Rising evicted_keys indicates memory pressure"
+      },
+      {
+        "id": "b",
+        "text": "Keyspace notifications ride on Pub/Sub, so a disconnected listener can miss events"
+      },
+      {
+        "id": "c",
+        "text": "A rolling upgrade upgrades a replica first, then fails over"
+      },
+      {
+        "id": "d",
+        "text": "MONITOR is the recommended way to continuously watch a production server"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "security-and-operations-q16",
+    "topic": "security-and-operations",
+    "lesson": "client-connection-management",
+    "type": "single-choice",
+    "prompt": "How do you take a consistent point-in-time backup of Redis data?",
+    "explanation": "BGSAVE creates a consistent RDB snapshot; copy that file off the Redis host so a host failure doesn't take the backups with it.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Run MONITOR and save the output"
+      },
+      {
+        "id": "b",
+        "text": "Run BGSAVE to produce a fresh RDB snapshot and copy dump.rdb off-host"
+      },
+      {
+        "id": "c",
+        "text": "Run FLUSHALL first"
+      },
+      {
+        "id": "d",
+        "text": "Delete the AOF file"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q17",
+    "topic": "security-and-operations",
+    "lesson": "monitoring-with-info-sections",
+    "type": "fill-blank",
+    "prompt": "The single command that returns grouped server metrics (memory, stats, clients, replication) is ______. (one word)",
+    "explanation": "INFO returns sections of metrics; INFO <section> (e.g. INFO memory) returns just one.",
+    "answer": [
+      "INFO",
+      "info"
+    ]
+  },
+  {
+    "id": "security-and-operations-q18",
+    "topic": "security-and-operations",
+    "lesson": "production-monitoring-vs-monitor",
+    "type": "single-choice",
+    "prompt": "What do keyspace notifications allow an application to do?",
+    "explanation": "With notify-keyspace-events enabled, Redis publishes events (like expired or del) that apps can subscribe to — though, being Pub/Sub, a disconnected listener may miss some.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Guarantee exactly-once delivery of all key events"
+      },
+      {
+        "id": "b",
+        "text": "Receive Pub/Sub events when keys change or expire, and react to them"
+      },
+      {
+        "id": "c",
+        "text": "Encrypt keys at rest"
+      },
+      {
+        "id": "d",
+        "text": "Automatically back up the keyspace"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q19",
+    "topic": "security-and-operations",
+    "lesson": "redis-8-unified-stack",
+    "type": "single-choice",
+    "prompt": "What did Redis 8 do with the capabilities formerly shipped as 'Redis Stack'?",
+    "explanation": "Redis 8 integrated the former module features into Redis Open Source and introduced the new Vector Sets type, so these capabilities are available out of the box.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Removed them entirely"
+      },
+      {
+        "id": "b",
+        "text": "Folded them (JSON, the Query Engine, probabilistic structures, time series) into Redis Open Source, and added Vector Sets"
+      },
+      {
+        "id": "c",
+        "text": "Made them paid-only"
+      },
+      {
+        "id": "d",
+        "text": "Renamed the core String type"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "advanced-data-types-q07",
+    "topic": "advanced-data-types",
+    "lesson": "query-engine-secondary-indexing",
+    "type": "single-choice",
+    "prompt": "What does the Query Engine let you do that core Redis alone cannot?",
+    "explanation": "Core Redis looks up values by key. The Query Engine creates secondary indexes over hashes/JSON so you can filter, full-text search, aggregate, and do vector search by content.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Store larger strings"
+      },
+      {
+        "id": "b",
+        "text": "Query data by its content — secondary indexes, full-text, and vector search — not just by key"
+      },
+      {
+        "id": "c",
+        "text": "Run without any memory"
+      },
+      {
+        "id": "d",
+        "text": "Disable persistence"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "advanced-data-types-q08",
+    "topic": "advanced-data-types",
+    "lesson": "redis-json-document-storage",
+    "type": "multiple-choice",
+    "prompt": "Which statements are true? Select all that apply.",
+    "explanation": "JSON supports path-based updates, Bloom filters are approximate (no false negatives, possible false positives), and Vector Sets do similarity search. Probabilistic types are approximate by design, not exact.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Native JSON lets you update individual fields by JSONPath"
+      },
+      {
+        "id": "b",
+        "text": "A Bloom filter has no false negatives but possible false positives"
+      },
+      {
+        "id": "c",
+        "text": "Vector Sets support similarity search for embeddings (AI/semantic search)"
+      },
+      {
+        "id": "d",
+        "text": "Probabilistic structures return exact answers"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "advanced-data-types-q09",
+    "topic": "advanced-data-types",
+    "lesson": "vector-sets-and-similarity-search",
+    "type": "single-choice",
+    "prompt": "What are Vector Sets / vector search primarily used for?",
+    "explanation": "Vector similarity finds items by meaning (via embedding vectors), which powers semantic search, recommendations, and retrieval-augmented generation for AI applications.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Compressing strings"
+      },
+      {
+        "id": "b",
+        "text": "Finding items whose embedding vectors are most similar to a query — semantic search, recommendations, and RAG"
+      },
+      {
+        "id": "c",
+        "text": "Replicating data across nodes"
+      },
+      {
+        "id": "d",
+        "text": "Setting key expirations"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "advanced-data-types-q10",
+    "topic": "advanced-data-types",
+    "lesson": "time-series-and-probabilistic-data",
+    "type": "fill-blank",
+    "prompt": "The probabilistic structure that answers approximate set membership with no false negatives but possible false positives is a ______ filter. (one word)",
+    "explanation": "A Bloom filter can say 'definitely not present' or 'probably present' — never a false negative, but sometimes a false positive — using very little memory.",
+    "answer": [
+      "Bloom",
+      "bloom"
+    ]
+  },
+  {
+    "id": "advanced-data-types-q11",
+    "topic": "advanced-data-types",
+    "lesson": "redis-json-document-storage",
+    "type": "single-choice",
+    "prompt": "Why prefer native JSON over storing a JSON string and using GET/SET?",
+    "explanation": "Native JSON with JSONPath lets you address and modify a single field server-side, avoiding the read-modify-write of a whole serialized blob.",
+    "options": [
+      {
+        "id": "a",
+        "text": "JSON values never expire"
+      },
+      {
+        "id": "b",
+        "text": "You can read and update individual fields by path without deserializing and rewriting the whole document"
+      },
+      {
+        "id": "c",
+        "text": "Strings cannot hold JSON"
+      },
+      {
+        "id": "d",
+        "text": "It disables the Query Engine"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q20",
+    "topic": "security-and-operations",
+    "lesson": "choosing-the-right-data-structure",
+    "type": "single-choice",
+    "prompt": "What should primarily drive your choice of Redis data structure?",
+    "explanation": "Good modeling matches the problem's access pattern to the structure that supports it directly (Set for uniqueness, Sorted Set for ranking, Stream for a durable log, and so on).",
+    "options": [
+      {
+        "id": "a",
+        "text": "Always use Strings for simplicity"
+      },
+      {
+        "id": "b",
+        "text": "The access pattern — whether you need order, uniqueness, ranking, object fields, or a durable log"
+      },
+      {
+        "id": "c",
+        "text": "The alphabetical order of command names"
+      },
+      {
+        "id": "d",
+        "text": "Whichever type uses the most memory"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q21",
+    "topic": "security-and-operations",
+    "lesson": "building-a-distributed-rate-limiter",
+    "type": "single-choice",
+    "prompt": "In core Redis, how do you look data up by something other than its primary key?",
+    "explanation": "Core Redis looks up by key, so you maintain your own index structures (like a Set of IDs) for non-key lookups — or use the Query Engine to index hashes/JSON automatically.",
+    "options": [
+      {
+        "id": "a",
+        "text": "You can't — Redis only supports key lookups, ever"
+      },
+      {
+        "id": "b",
+        "text": "Build a secondary index yourself (e.g. a Set/Sorted Set of IDs) or use the Query Engine to index content"
+      },
+      {
+        "id": "c",
+        "text": "Run KEYS on every request"
+      },
+      {
+        "id": "d",
+        "text": "Store everything in one giant hash"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q22",
+    "topic": "security-and-operations",
+    "lesson": "common-anti-patterns-and-when-not-to-use",
+    "type": "multiple-choice",
+    "prompt": "Which are Redis modeling anti-patterns? Select all that apply.",
+    "explanation": "Big keys, unbounded growth, and KEYS in production are anti-patterns. Giving cache keys a TTL is a good practice, not an anti-pattern.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Big keys — a single collection with millions of elements"
+      },
+      {
+        "id": "b",
+        "text": "Unbounded collections that only ever grow"
+      },
+      {
+        "id": "c",
+        "text": "Using KEYS in production to find keys"
+      },
+      {
+        "id": "d",
+        "text": "Giving cache keys a TTL"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ]
+  },
+  {
+    "id": "security-and-operations-q23",
+    "topic": "security-and-operations",
+    "lesson": "choosing-the-right-data-structure",
+    "type": "single-choice",
+    "prompt": "Which structures best fit a leaderboard and a reliable, replayable job queue, respectively?",
+    "explanation": "A Sorted Set keeps players ranked by score; a Stream with consumer groups gives at-least-once, replayable, multi-worker job processing.",
+    "options": [
+      {
+        "id": "a",
+        "text": "A List and a Set"
+      },
+      {
+        "id": "b",
+        "text": "A Sorted Set and a Stream (with consumer groups)"
+      },
+      {
+        "id": "c",
+        "text": "A String and a Hash"
+      },
+      {
+        "id": "d",
+        "text": "A HyperLogLog and a Bitmap"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "security-and-operations-q24",
+    "topic": "security-and-operations",
+    "lesson": "building-a-distributed-rate-limiter",
+    "type": "fill-blank",
+    "prompt": "A fixed-window rate limiter increments a per-window counter and sets an ______ on it so the window resets automatically. (one word — the key-lifetime concept)",
+    "explanation": "INCR the counter and set an EXPIRE (a TTL) matching the window; when it expires the limit resets to zero with no scheduled job.",
+    "answer": [
+      "expiry",
+      "expire",
+      "EXPIRE",
+      "TTL",
+      "ttl"
+    ]
+  },
+  {
+    "id": "security-and-operations-q25",
+    "topic": "security-and-operations",
+    "lesson": "common-anti-patterns-and-when-not-to-use",
+    "type": "single-choice",
+    "prompt": "When is Redis the WRONG primary tool?",
+    "explanation": "Redis is a poor fit for query-heavy reporting, datasets far larger than RAM, or strict transactional/rollback needs — use a purpose-built database (often with Redis as a cache in front).",
+    "options": [
+      {
+        "id": "a",
+        "text": "When you need a fast cache in front of a database"
+      },
+      {
+        "id": "b",
+        "text": "When you need rich ad-hoc queries/joins, data much larger than RAM, or strong transactional guarantees with rollback"
+      },
+      {
+        "id": "c",
+        "text": "When you need a leaderboard"
+      },
+      {
+        "id": "d",
+        "text": "When you need a session store"
+      }
+    ],
+    "answer": "b"
+  },
+  {
+    "id": "keys-and-strings-q07",
+    "topic": "keys-and-strings",
+    "lesson": "multi-key-string-operations",
+    "type": "single-choice",
+    "prompt": "How does MSET behave regarding atomicity when setting multiple keys?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It is completely atomic: all keys are set at once and other clients see either all updates or none"
+      },
+      {
+        "id": "b",
+        "text": "It sets keys one by one, allowing other clients to see intermediate state"
+      },
+      {
+        "id": "c",
+        "text": "It rolls back if any of the target keys already exist"
+      },
+      {
+        "id": "d",
+        "text": "It only updates keys if all values are identical"
+      }
+    ],
+    "answer": "a",
+    "explanation": "MSET is atomic: Redis updates all specified keys in a single operation, ensuring no client observes a partial update."
+  },
+  {
+    "id": "keys-and-strings-q08",
+    "topic": "keys-and-strings",
+    "lesson": "string-memory-and-string-slices",
+    "type": "single-choice",
+    "prompt": "What does GETRANGE do when reading from a Redis string?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It returns a substring between the specified start and end byte offsets"
+      },
+      {
+        "id": "b",
+        "text": "It returns the number of keys matching a range pattern"
+      },
+      {
+        "id": "c",
+        "text": "It deletes characters outside the given range"
+      },
+      {
+        "id": "d",
+        "text": "It splits the string into a Redis List"
+      }
+    ],
+    "answer": "a",
+    "explanation": "GETRANGE returns a substring determined by the start and end zero-based byte offsets (supports negative offsets from the end)."
+  },
+  {
+    "id": "keys-and-strings-q09",
+    "topic": "keys-and-strings",
+    "lesson": "keyspace-and-key-naming",
+    "type": "single-choice",
+    "prompt": "What is the widely accepted convention for namespacing Redis keys?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Using colons ':' to separate entity type and identifier, such as 'user:1000:profile'"
+      },
+      {
+        "id": "b",
+        "text": "Using file path slashes like 'user/1000/profile'"
+      },
+      {
+        "id": "c",
+        "text": "Writing XML tag wrappers around key names"
+      },
+      {
+        "id": "d",
+        "text": "Redis prohibits punctuation in key names"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Colons ':' are the standard Redis convention for structuring keys hierarchically (e.g. object-type:id:field)."
+  },
+  {
+    "id": "keys-and-strings-q10",
+    "topic": "keys-and-strings",
+    "lesson": "set-options-nx-xx-get",
+    "type": "single-choice",
+    "prompt": "What does the 'GET' option in 'SET key value GET' accomplish?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It returns the old value stored at the key before setting the new one"
+      },
+      {
+        "id": "b",
+        "text": "It checks whether the key exists without modifying it"
+      },
+      {
+        "id": "c",
+        "text": "It automatically generates a random value"
+      },
+      {
+        "id": "d",
+        "text": "It forces an HTTP GET request"
+      }
+    ],
+    "answer": "a",
+    "explanation": "SET key value GET returns the previous value stored at the key, or nil if the key did not exist, replacing the older GETSET command."
+  },
+  {
+    "id": "keys-and-strings-q11",
+    "topic": "keys-and-strings",
+    "lesson": "atomic-counters-incr-decr",
+    "type": "single-choice",
+    "prompt": "What happens if you run INCR on a key that does not yet exist?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Redis initializes the key to 0 and increments it to 1, returning 1"
+      },
+      {
+        "id": "b",
+        "text": "Redis returns a (nil) error"
+      },
+      {
+        "id": "c",
+        "text": "Redis returns a NOKEY exception"
+      },
+      {
+        "id": "d",
+        "text": "Redis sets the key to an empty string"
+      }
+    ],
+    "answer": "a",
+    "explanation": "If a key does not exist, INCR initializes it to 0 before performing the increment, returning 1."
+  },
+  {
+    "id": "keys-and-strings-q12",
+    "topic": "keys-and-strings",
+    "lesson": "inspecting-keys-del-exists-type",
+    "type": "single-choice",
+    "prompt": "What does the UNLINK command do compared to DEL?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It removes keys asynchronously in a background thread to prevent blocking on large objects"
+      },
+      {
+        "id": "b",
+        "text": "It renames keys instead of deleting them"
+      },
+      {
+        "id": "c",
+        "text": "It only deletes keys that have an expired TTL"
+      },
+      {
+        "id": "d",
+        "text": "It disconnects client connections"
+      }
+    ],
+    "answer": "a",
+    "explanation": "UNLINK performs non-blocking reclamation: it removes keys from the keyspace immediately and deallocates memory in the background."
+  },
+  {
+    "id": "persistence-and-durability-q07",
+    "topic": "persistence-and-durability",
+    "lesson": "combining-rdb-and-aof",
+    "type": "single-choice",
+    "prompt": "When both RDB and AOF persistence are enabled, which file does Redis use to reload data on restart?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The AOF file, because it is guaranteed to have the most complete write history"
+      },
+      {
+        "id": "b",
+        "text": "The RDB snapshot, because it loads faster into RAM"
+      },
+      {
+        "id": "c",
+        "text": "Whichever file was modified most recently on disk"
+      },
+      {
+        "id": "d",
+        "text": "Redis throws an error and asks the administrator to choose"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Redis always selects the AOF file when both exist because AOF provides the highest durability and least data loss window."
+  },
+  {
+    "id": "persistence-and-durability-q08",
+    "topic": "persistence-and-durability",
+    "lesson": "bgsave-fork-and-copy-on-write",
+    "type": "single-choice",
+    "prompt": "How does BGSAVE take a snapshot without freezing write commands?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It forks a child process that uses Linux Copy-on-Write (COW) memory pages"
+      },
+      {
+        "id": "b",
+        "text": "It locks the keyspace and rejects client writes"
+      },
+      {
+        "id": "c",
+        "text": "It creates a second Redis server instance in Docker"
+      },
+      {
+        "id": "d",
+        "text": "It copies the entire RAM dataset into swap space first"
+      }
+    ],
+    "answer": "a",
+    "explanation": "BGSAVE calls fork(); the child process writes the RDB file while the OS uses Copy-on-Write so the parent process can continue modifying pages."
+  },
+  {
+    "id": "persistence-and-durability-q09",
+    "topic": "persistence-and-durability",
+    "lesson": "rdb-and-aof-disaster-recovery",
+    "type": "single-choice",
+    "prompt": "Why are RDB snapshots widely favored for off-site disaster recovery backups?",
+    "options": [
+      {
+        "id": "a",
+        "text": "RDB produces a single compact binary file that is easy to compress and transfer to Amazon S3 or cold storage"
+      },
+      {
+        "id": "b",
+        "text": "RDB files are human-readable plaintext text documents"
+      },
+      {
+        "id": "c",
+        "text": "RDB files never lose any recent writes"
+      },
+      {
+        "id": "d",
+        "text": "RDB files can only be read on the same physical host"
+      }
+    ],
+    "answer": "a",
+    "explanation": "A single compact binary dump.rdb file is trivial to encrypt, compress, and transfer to remote object storage for point-in-time disaster recovery."
+  },
+  {
+    "id": "persistence-and-durability-q10",
+    "topic": "persistence-and-durability",
+    "lesson": "persistence-tradeoffs-decision-guide",
+    "type": "single-choice",
+    "prompt": "When should you run Redis with all persistence disabled ('save \"\"' and 'appendonly no')?",
+    "options": [
+      {
+        "id": "a",
+        "text": "When Redis is used strictly as a transient cache where data can be regenerated from a primary database"
+      },
+      {
+        "id": "b",
+        "text": "When storing critical financial ledger balances"
+      },
+      {
+        "id": "c",
+        "text": "When running in production on bare metal servers"
+      },
+      {
+        "id": "d",
+        "text": "Whenever Redis runs in a Docker container"
+      }
+    ],
+    "answer": "a",
+    "explanation": "If Redis functions purely as a cache or transient scratchpad, disabling persistence eliminates disk I/O overhead and saves CPU."
+  },
+  {
+    "id": "persistence-and-durability-q11",
+    "topic": "persistence-and-durability",
+    "lesson": "aof-rewrite-compaction",
+    "type": "single-choice",
+    "prompt": "What does a modern Multi-Part AOF rewrite produce in Redis 7+?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A base file (compact snapshot) plus incremental delta files recording new writes"
+      },
+      {
+        "id": "b",
+        "text": "A single gigantic monolithic text file"
+      },
+      {
+        "id": "c",
+        "text": "A series of zip archives stored in tmp"
+      },
+      {
+        "id": "d",
+        "text": "Multiple files split by database number"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Multi-Part AOF splits data into a base file representing state at rewrite time and incremental delta files tracking live modifications."
+  },
+  {
+    "id": "persistence-and-durability-q12",
+    "topic": "persistence-and-durability",
+    "lesson": "persistence-overview-in-memory",
+    "type": "single-choice",
+    "prompt": "What happens if Linux vm.overcommit_memory is set to 0 during a background snapshot fork?",
+    "options": [
+      {
+        "id": "a",
+        "text": "The fork() call may fail with an out-of-memory error even if plenty of free RAM remains"
+      },
+      {
+        "id": "b",
+        "text": "Redis automatically upgrades to Redis 8"
+      },
+      {
+        "id": "c",
+        "text": "The operating system compresses all Redis keys"
+      },
+      {
+        "id": "d",
+        "text": "Snapshotting runs twice as fast"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Linux heuristic memory overcommit (0) can cause fork() to fail; production Redis requires setting 'vm.overcommit_memory = 1'."
+  },
+  {
+    "id": "caching-patterns-q07",
+    "topic": "caching-patterns",
+    "lesson": "ttl-jitter-and-cache-penetration",
+    "type": "single-choice",
+    "prompt": "How does TTL jitter protect against mass cache expiration spikes?",
+    "options": [
+      {
+        "id": "a",
+        "text": "By adding small random duration offsets so thousands of keys do not expire simultaneously"
+      },
+      {
+        "id": "b",
+        "text": "By forcing all keys to have an identical expiration timestamp"
+      },
+      {
+        "id": "c",
+        "text": "By deleting keys immediately after creation"
+      },
+      {
+        "id": "d",
+        "text": "By storing keys in encrypted sorted sets"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Adding random jitter (e.g. 3600 seconds +/- random 300s) spreads key expirations evenly across time, avoiding database stampedes."
+  },
+  {
+    "id": "caching-patterns-q08",
+    "topic": "caching-patterns",
+    "lesson": "cache-warming-and-preloading",
+    "type": "single-choice",
+    "prompt": "What is the primary goal of cache warming before a major product launch?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Preloading known high-traffic keys into Redis so initial user requests hit cache rather than the backend database"
+      },
+      {
+        "id": "b",
+        "text": "Testing whether Redis server fans run at maximum speed"
+      },
+      {
+        "id": "c",
+        "text": "Flushing existing database records to save memory"
+      },
+      {
+        "id": "d",
+        "text": "Generating artificial slow queries in the slowlog"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Cache warming populates predictable hot data into the cache ahead of traffic spikes to protect database systems from cold-start overload."
+  },
+  {
+    "id": "caching-patterns-q09",
+    "topic": "caching-patterns",
+    "lesson": "distributed-locking-tradeoffs",
+    "type": "single-choice",
+    "prompt": "Why must a distributed lock release script check that the stored lock value matches the client's token?",
+    "options": [
+      {
+        "id": "a",
+        "text": "To prevent a client from accidentally releasing a lock acquired by another process after its own lease expired"
+      },
+      {
+        "id": "b",
+        "text": "Because Redis commands cannot delete keys without a password"
+      },
+      {
+        "id": "c",
+        "text": "To encrypt the return code for security audits"
+      },
+      {
+        "id": "d",
+        "text": "Because locks are automatically converted into streams"
+      }
+    ],
+    "answer": "a",
+    "explanation": "A client holding an expired lock must never delete a new lock acquired by another client; checking a unique token in Lua ensures safe release."
+  },
+  {
+    "id": "caching-patterns-q10",
+    "topic": "caching-patterns",
+    "lesson": "ttl-jitter-and-cache-penetration",
+    "type": "single-choice",
+    "prompt": "How does a Bloom filter help prevent cache penetration (queries for non-existent keys)?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It checks whether a requested ID exists before querying the database, instantly rejecting non-existent queries"
+      },
+      {
+        "id": "b",
+        "text": "It automatically generates dummy database rows"
+      },
+      {
+        "id": "c",
+        "text": "It prevents users from sending HTTP requests"
+      },
+      {
+        "id": "d",
+        "text": "It increases Redis maxmemory capacity"
+      }
+    ],
+    "answer": "a",
+    "explanation": "A Bloom filter tests for key existence in RAM; if the filter says the ID definitely does not exist, the query is rejected without hitting the DB."
+  },
+  {
+    "id": "caching-patterns-q11",
+    "topic": "caching-patterns",
+    "lesson": "write-through-and-write-behind",
+    "type": "single-choice",
+    "prompt": "What is the difference between write-through and write-behind caching?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Write-through updates the cache and database synchronously; write-behind queues writes and flushes asynchronously"
+      },
+      {
+        "id": "b",
+        "text": "Write-through is only for strings, while write-behind is only for hashes"
+      },
+      {
+        "id": "c",
+        "text": "Write-through stores data in disk files, while write-behind stores data in memory"
+      },
+      {
+        "id": "d",
+        "text": "Write-through deletes the database record upon write"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Write-through writes synchronously to both datastores; write-behind buffers writes in cache and flushes to the database asynchronously."
+  },
+  {
+    "id": "caching-patterns-q12",
+    "topic": "caching-patterns",
+    "lesson": "cache-stampede-and-mutex-locks",
+    "type": "single-choice",
+    "prompt": "How does probabilistic early expiration (XFetch algorithm) solve cache stampedes?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A worker probabilistically recomputes the key slightly before expiration based on request latency and remaining TTL"
+      },
+      {
+        "id": "b",
+        "text": "It immediately deletes all cache keys upon arrival"
+      },
+      {
+        "id": "c",
+        "text": "It disables read queries when traffic increases"
+      },
+      {
+        "id": "d",
+        "text": "It forces clients to query the database directly"
+      }
+    ],
+    "answer": "a",
+    "explanation": "Optimal probabilistic early expiration computes a probability of refreshing hot keys in the background before they expire."
+  },
+  {
+    "id": "advanced-data-types-q12",
+    "topic": "advanced-data-types",
+    "lesson": "time-series-and-probabilistic-data",
+    "type": "single-choice",
+    "prompt": "What capability does native RedisTimeSeries provide?",
+    "options": [
+      {
+        "id": "a",
+        "text": "High-throughput metric ingestion with downsampling, compaction rules, and time-range aggregations"
+      },
+      {
+        "id": "b",
+        "text": "Formatting clock times in human-readable local timezones"
+      },
+      {
+        "id": "c",
+        "text": "Synchronizing server clocks with NTP daemons"
+      },
+      {
+        "id": "d",
+        "text": "Measuring Redis ping latencies"
+      }
+    ],
+    "answer": "a",
+    "explanation": "RedisTimeSeries ingests time-stamped metric samples with built-in downsampling (averages, mins, maxes) and efficient compaction."
+  }
+]

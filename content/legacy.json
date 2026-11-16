@@ -1,0 +1,280 @@
+[
+  {
+    "id": "lesson-01",
+    "slug": "what-is-redis",
+    "title": "What Is Redis?",
+    "lessons": [
+      "what-is-redis",
+      "single-threaded-execution",
+      "redis-vs-memcached-and-rdbms",
+      "redis-licensing-and-valkey"
+    ]
+  },
+  {
+    "id": "lesson-02",
+    "slug": "getting-started-redis-cli",
+    "title": "Getting Started with redis-cli",
+    "lessons": [
+      "installing-and-running-redis",
+      "connecting-with-redis-cli",
+      "logical-databases-select",
+      "the-resp-protocol"
+    ]
+  },
+  {
+    "id": "lesson-03",
+    "slug": "keys-and-strings",
+    "title": "Keys and Strings",
+    "lessons": [
+      "keyspace-and-key-naming",
+      "inspecting-keys-del-exists-type",
+      "keys-vs-scan",
+      "string-type-and-binary-safety",
+      "atomic-counters-incr-decr",
+      "set-options-nx-xx-get",
+      "multi-key-string-operations",
+      "string-memory-and-string-slices"
+    ]
+  },
+  {
+    "id": "lesson-04",
+    "slug": "lists",
+    "title": "Lists",
+    "lessons": [
+      "list-data-structure-basics",
+      "list-range-and-inspection",
+      "capped-lists-with-ltrim",
+      "blocking-list-pops"
+    ]
+  },
+  {
+    "id": "lesson-05",
+    "slug": "hashes",
+    "title": "Hashes",
+    "lessons": [
+      "hash-structure-and-field-values",
+      "hash-crud-hset-hget-hdel",
+      "hash-bulk-and-counters",
+      "hash-memory-efficiency"
+    ]
+  },
+  {
+    "id": "lesson-06",
+    "slug": "sets",
+    "title": "Sets",
+    "lessons": [
+      "set-data-structure-basics",
+      "set-membership-and-manipulation",
+      "set-algebra-sinter-sunion-sdiff",
+      "set-modeling-patterns"
+    ]
+  },
+  {
+    "id": "lesson-07",
+    "slug": "sorted-sets",
+    "title": "Sorted Sets",
+    "lessons": [
+      "sorted-sets-scores-and-ordering",
+      "zadd-and-score-updates",
+      "range-queries-by-index-and-score",
+      "building-leaderboards",
+      "lexicographical-and-time-ranges"
+    ]
+  },
+  {
+    "id": "lesson-08",
+    "slug": "expiration-and-key-lifetime",
+    "title": "Expiration and Key Lifetime",
+    "lessons": [
+      "expire-and-ttl-basics",
+      "persist-and-clearing-ttl",
+      "passive-vs-active-expiration",
+      "absolute-expiration-and-expiretime"
+    ]
+  },
+  {
+    "id": "lesson-09",
+    "slug": "bitmaps-and-hyperloglog",
+    "title": "Bitmaps and HyperLogLog",
+    "lessons": [
+      "bitmaps-per-bit-flags",
+      "bitmap-analytics-bitcount-bitop",
+      "hyperloglog-concept-cardinality",
+      "hyperloglog-commands-pfadd-pfcount"
+    ]
+  },
+  {
+    "id": "lesson-10",
+    "slug": "publish-subscribe",
+    "title": "Publish/Subscribe",
+    "lessons": [
+      "pubsub-architecture-and-channels",
+      "pubsub-commands-publish-subscribe",
+      "pattern-subscriptions-psubscribe",
+      "pubsub-limitations-and-pitfalls"
+    ]
+  },
+  {
+    "id": "lesson-11",
+    "slug": "streams",
+    "title": "Streams",
+    "lessons": [
+      "stream-data-type-and-append-log",
+      "appending-and-reading-streams",
+      "consumer-groups-and-distributed-workers",
+      "stream-acknowledgements-and-recovery",
+      "capped-streams-xtrim"
+    ]
+  },
+  {
+    "id": "lesson-12",
+    "slug": "transactions",
+    "title": "Transactions",
+    "lessons": [
+      "transactions-multi-and-exec",
+      "no-rollback-in-redis-transactions",
+      "optimistic-locking-with-watch",
+      "discard-and-transaction-lifecycle"
+    ]
+  },
+  {
+    "id": "lesson-13",
+    "slug": "lua-scripting-and-functions",
+    "title": "Lua Scripting and Functions",
+    "lessons": [
+      "lua-scripting-basics-eval",
+      "keys-vs-argv-in-scripts",
+      "atomicity-and-script-caching",
+      "redis-functions-architecture"
+    ]
+  },
+  {
+    "id": "lesson-14",
+    "slug": "persistence-rdb-and-aof",
+    "title": "Persistence: RDB and AOF",
+    "lessons": [
+      "persistence-overview-in-memory",
+      "rdb-snapshots-save-bgsave",
+      "aof-append-only-file-fsync",
+      "aof-rewrite-compaction",
+      "combining-rdb-and-aof",
+      "rdb-and-aof-disaster-recovery",
+      "bgsave-fork-and-copy-on-write",
+      "persistence-tradeoffs-decision-guide"
+    ]
+  },
+  {
+    "id": "lesson-15",
+    "slug": "memory-and-eviction",
+    "title": "Memory and Eviction",
+    "lessons": [
+      "configuring-maxmemory",
+      "eviction-policies-overview",
+      "lru-vs-lfu-sampling-algorithms",
+      "memory-diagnostics-and-usage"
+    ]
+  },
+  {
+    "id": "lesson-16",
+    "slug": "caching-patterns",
+    "title": "Caching Patterns",
+    "lessons": [
+      "cache-aside-pattern",
+      "write-through-and-write-behind",
+      "cache-stampede-and-mutex-locks",
+      "cache-invalidation-strategies",
+      "client-side-caching-tracking",
+      "ttl-jitter-and-cache-penetration",
+      "cache-warming-and-preloading",
+      "distributed-locking-tradeoffs"
+    ]
+  },
+  {
+    "id": "lesson-17",
+    "slug": "pipelining-and-performance",
+    "title": "Pipelining and Performance",
+    "lessons": [
+      "pipelining-rtt-reduction",
+      "threading-architecture-io-threads",
+      "identifying-slow-queries-slowlog"
+    ]
+  },
+  {
+    "id": "lesson-18",
+    "slug": "replication",
+    "title": "Replication",
+    "lessons": [
+      "replication-architecture-primary-replica",
+      "full-vs-partial-resynchronization",
+      "asynchronous-replication-tradeoffs",
+      "wait-command-and-scaling-reads"
+    ]
+  },
+  {
+    "id": "lesson-19",
+    "slug": "high-availability-with-sentinel",
+    "title": "High Availability with Sentinel",
+    "lessons": [
+      "sentinel-architecture-and-quorum",
+      "automatic-failover-workflow",
+      "sentinel-configuration-and-split-brain",
+      "client-sentinel-service-discovery"
+    ]
+  },
+  {
+    "id": "lesson-20",
+    "slug": "redis-cluster",
+    "title": "Redis Cluster",
+    "lessons": [
+      "redis-cluster-sharding-hash-slots",
+      "hash-tags-multi-key-operations",
+      "cluster-redirects-moved-and-ask",
+      "cluster-failover-and-limitations"
+    ]
+  },
+  {
+    "id": "lesson-21",
+    "slug": "security",
+    "title": "Security",
+    "lessons": [
+      "network-binding-and-protected-mode",
+      "authentication-with-requirepass",
+      "access-control-lists-acl",
+      "encrypting-traffic-with-tls",
+      "renaming-and-disabling-dangerous-commands"
+    ]
+  },
+  {
+    "id": "lesson-22",
+    "slug": "observability-and-operations",
+    "title": "Observability and Operations",
+    "lessons": [
+      "monitoring-with-info-sections",
+      "production-monitoring-vs-monitor",
+      "keyspace-notifications",
+      "client-connection-management"
+    ]
+  },
+  {
+    "id": "lesson-23",
+    "slug": "redis-8-data-and-query-engine",
+    "title": "The Redis 8 Data and Query Engine",
+    "lessons": [
+      "redis-8-unified-stack",
+      "redis-json-document-storage",
+      "query-engine-secondary-indexing",
+      "time-series-and-probabilistic-data",
+      "vector-sets-and-similarity-search"
+    ]
+  },
+  {
+    "id": "lesson-24",
+    "slug": "data-modeling-and-capstone",
+    "title": "Data Modeling and Capstone",
+    "lessons": [
+      "choosing-the-right-data-structure",
+      "building-a-distributed-rate-limiter",
+      "common-anti-patterns-and-when-not-to-use"
+    ]
+  }
+]

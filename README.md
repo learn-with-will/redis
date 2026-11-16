@@ -1,81 +1,43 @@
-# Redis Learning Portal
+# Redis Learn
 
-A **frontend-only** Redis course: read Markdown lessons, take quizzes, and track your
-progress — all in the browser. No sign-up, no backend.
+The content of the Redis course at <https://learn-with-will.github.io/redis/>: 110 short lessons ("bites") in 12 topics, each teaching one idea in 3–5 minutes, plus a bank of 163 quiz questions. It covers fundamentals (in-memory execution, RESP protocol, redis-cli), keys & strings (binary safety, atomic counters, multi-key queries), lists & hashes (listpacks, queues, field CRUD), sets & sorted sets (uniqueness, leaderboards, lexicographical ranges), expiration & memory (TTLs, LRU/LFU eviction, memory diagnostics), advanced data structures (Bitmaps, HyperLogLog, Bloom filters, JSON, vector similarity search), messaging & streams (Pub/Sub, append-only streams, consumer groups), transactions & scripting (MULTI/EXEC, WATCH, atomic Lua scripts, Redis functions), persistence & durability (RDB snapshots, AOF, fsync policies, copy-on-write fork), caching patterns (cache-aside, stampede protection, client-side caching), scaling & clustering (asynchronous replication, Sentinel failover, 16384 hash slots, cluster bus), and security & operations (ACLs, TLS encryption, slowlog latency profiling, data modeling).
 
-## What this is
+This repository holds **content only**. The site itself (lesson reader, quizzes, progress, optional sign-in) is the shared [course shell](https://github.com/learn-with-will/course-shell), which every course uses.
 
-The portal shell is built with React 19, Vite, TypeScript, React Router, Tailwind CSS v4,
-`marked`, and PrismJS. It renders a **24-lesson curriculum** that takes you from "what is
-Redis?" through the core data types, on to messaging, persistence and caching patterns, and
-finally to running Redis in production — replication, Sentinel, Cluster, security, and data
-modeling. Every lesson is written in plain, welcoming English and verified against primary
-sources (see **Sources** below).
-
-Progress, bookmarks, and quiz scores live in `localStorage` under `redis-learning-*` keys,
-so nothing leaves your machine.
-
-## Run it locally
-
-```bash
-npm install
-npm run dev      # start the dev server
-npm run build    # type-check + production build into dist/
-npm run preview  # serve the production build
+```text
+course.json              name, brand colours, home page copy, code languages
+content/topics.json      the 12 topics
+content/lessons/*.md     one bite per file
+content/legacy.json      old long-lesson URLs → the bites that replaced them
+quiz/questions.json      the question bank
 ```
 
-## How the content works
+## Working on the course
 
-The app is **data-driven** — adding a lesson needs no code changes:
+Clone the shell next to this folder, then run its commands with this folder as the argument:
 
-1. Write the lesson Markdown in `public/content/<level>/<slug>.md` with YAML front-matter
-   (including a `summary`).
-2. Add a quiz at `public/quizzes/lesson-NN.json`.
-3. Regenerate `public/content/course-manifest.json` from the front-matter (the manifest is
-   generated, so it can't drift).
+```bash
+git clone https://github.com/learn-with-will/course-shell.git ../course-shell
+cd ../course-shell
+npm ci
+npm run dev -- ../redis                 # live preview at http://localhost:4200
+npm run validate -- ../redis --strict   # the check the deploy runs
+```
 
-> **Code fences** must declare one of the highlighted languages: `bash`, `json`, `lua`,
-> `yaml`, or `text` (redis-cli request/response transcripts, key diagrams, and `redis.conf`
-> snippets use `text`; see `src/core/prism.ts`).
+Node 22.18 or later is required.
 
-## Curriculum
+## Adding a lesson
 
-**Beginner — fundamentals & core data types:** what is Redis? · getting started with
-redis-cli · keys & strings · lists · hashes · sets · sorted sets · expiration & key lifetime.
+1. Create `content/lessons/<slug>.md` with front-matter (`slug`, `title`, `topic`, `kind`, `summary`, `tags`, `related`) and the standard sections.
+2. Add questions for it to `quiz/questions.json` with `"topic"` and `"lesson"`.
+3. Run `npm run validate -- ../redis --strict` from the shell folder.
 
-**Intermediate — more types, messaging, atomicity & durability:** bitmaps & HyperLogLog ·
-Publish/Subscribe · Streams · transactions · Lua scripting & Functions · persistence
-(RDB & AOF) · memory & eviction · caching patterns.
+The rules (length limits, which visual fits which kind of information, the diagram syntax) are in the shell's [CONTENT_GUIDE.md](https://github.com/learn-with-will/course-shell/blob/main/CONTENT_GUIDE.md).
 
-**Advanced — production Redis:** pipelining & performance · replication · high availability
-with Sentinel · Redis Cluster · security & ACLs · observability & operations · the Redis 8
-data & query engine · data modeling & capstone.
+## Accuracy
 
-## Accuracy: no hallucination
+Facts and commands are synthesized from official Redis documentation, the Redis Open Source Specification, Redis 8 release notes, and real-world high-throughput production operations.
 
-Every command, option, default, and behavior is verified against primary sources. The
-per-lesson authoring contract lives in `prompts/redis-authoring-prompt.md`, and the
-phase-by-phase overview in `prompts/redis-study-pathway.md`.
+## Deployment
 
-**Sources:**
-
-- **Redis documentation** — <https://redis.io/docs/latest/> — the primary anchor for how
-  Redis works (data types, persistence, replication, Cluster, eviction, security).
-- **Redis command reference** — <https://redis.io/commands/> — the source of truth for every
-  command's syntax, options, return value, and time complexity.
-- **RESP protocol specification** —
-  <https://redis.io/docs/latest/develop/reference/protocol-spec/>.
-- **Redis source & release notes** — <https://github.com/redis/redis> — for
-  version-specific features (Redis 8 Vector Sets, the bundled Query Engine).
-- **Redis licensing** — <https://redis.io/legal/licenses/> and the AGPLv3 announcement —
-  and **Valkey** — <https://valkey.io> — for the licensing/fork history.
-
-## Deploying
-
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds with
-`BASE_PATH=/<repo>/` and publishes `dist/` to GitHub Pages.
-
----
-
-React 19 · Vite · TypeScript · React Router · Tailwind CSS v4 · marked · PrismJS ·
-localStorage.
+Pushing to `main` runs `.github/workflows/deploy.yml`, which calls the shell's reusable workflow: it validates this course in strict mode, builds it with the latest shell and publishes it to GitHub Pages. To pick up a shell change without a content change, run the workflow by hand from the Actions tab.

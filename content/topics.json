@@ -1,0 +1,74 @@
+[
+  {
+    "id": "fundamentals",
+    "title": "Fundamentals and Architecture",
+    "blurb": "In-memory architecture, single-threaded execution, redis-cli tooling, RESP protocol, and licensing history.",
+    "order": 1
+  },
+  {
+    "id": "keys-and-strings",
+    "title": "Keyspace and Strings",
+    "blurb": "Keyspace design, safe iteration with SCAN, binary-safe strings, atomic counters, and SET options.",
+    "order": 2
+  },
+  {
+    "id": "lists-and-hashes",
+    "title": "Lists and Hashes",
+    "blurb": "Ordered lists, capped collections, blocking queues, hashes, and memory-efficient object modeling.",
+    "order": 3
+  },
+  {
+    "id": "sets-and-sorted-sets",
+    "title": "Sets and Sorted Sets",
+    "blurb": "Unordered sets, set algebra, sorted sets with score-based ranking, leaderboards, and range queries.",
+    "order": 4
+  },
+  {
+    "id": "expiration-and-memory",
+    "title": "Expiration and Memory Management",
+    "blurb": "Key time-to-live (TTL), passive versus active expiration, maxmemory bounds, and eviction policies.",
+    "order": 5
+  },
+  {
+    "id": "advanced-data-types",
+    "title": "Bitmaps, HyperLogLog, and Modern Types",
+    "blurb": "Bitmaps, probabilistic HyperLogLog, RedisJSON documents, search indexing, and vector similarity.",
+    "order": 6
+  },
+  {
+    "id": "messaging-and-streams",
+    "title": "Pub/Sub Messaging and Streams",
+    "blurb": "Fire-and-forget Pub/Sub channels, persistent append-only Streams, consumer groups, and message acknowledgement.",
+    "order": 7
+  },
+  {
+    "id": "transactions-and-scripting",
+    "title": "Transactions and Scripting",
+    "blurb": "MULTI/EXEC blocks, check-and-set optimistic locking with WATCH, atomic Lua scripts, and Redis Functions.",
+    "order": 8
+  },
+  {
+    "id": "persistence-and-durability",
+    "title": "Persistence and Durability",
+    "blurb": "Point-in-time RDB snapshots, Append-Only File (AOF), fsync durability trade-offs, and disaster recovery.",
+    "order": 9
+  },
+  {
+    "id": "caching-patterns",
+    "title": "Caching Patterns and Strategies",
+    "blurb": "Cache-aside, write-through, write-behind, cache stampede mitigation, TTL jitter, and client-side caching.",
+    "order": 10
+  },
+  {
+    "id": "scaling-and-clustering",
+    "title": "Replication, Sentinel, and Cluster",
+    "blurb": "Asynchronous replication, Sentinel automatic failover, and horizontal sharding across 16384 hash slots.",
+    "order": 11
+  },
+  {
+    "id": "security-and-operations",
+    "title": "Security, Observability, and Operations",
+    "blurb": "ACL permissions, TLS encryption, slowlog latency profiling, production operations, and data modeling.",
+    "order": 12
+  }
+]
